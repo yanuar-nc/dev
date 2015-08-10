@@ -1,5 +1,5 @@
 <?php
-//App::uses( 'SimplePasswordHasher', 'Controller/Component/Auth' );
+App::uses( 'SimplePasswordHasher', 'Controller/Component/Auth' );
 //App::uses( 'CakeEmail', 'Network/Email' );
 //App::import('Controller', 'EmailFormats');
 
@@ -33,7 +33,7 @@
             } elseif( isset( $this->request->params[ 'leader' ] ) ){
                 $this->Auth->authenticate = array(
                     'Form' => array(
-                        //'scope' => array( 'User.role' => 'leader' ),
+                        'scope' => array( 'User.role' => 'leader' ),
                     ),
                 );                
             } elseif( isset( $this->request->params[ 'assistant' ] ) ){
@@ -77,7 +77,7 @@
         
         public function admin_logout()
         {
-            return $this->redirect( $this->Auth->logout() );
+            $this->logout();
         }
         
         public function admin_index()
@@ -408,8 +408,10 @@
 
                 if( $this->Auth->login() )
                 {
-                    //$this->Auth->redirect();
-                    //return $this->redirect( array( 'controller' => 'home', 'action' => 'index' ));
+                    $auth_data          = $this->Auth->user();
+
+                    $this->Session->setFlash( __( 'Welcome to mail management system' ), 'Bootstrap/flash-success' );
+                    return $this->redirect( array( 'controller' => 'home', 'action' => 'index', $auth_data[ 'role' ] => true ));
                 }
                 $this->Session->setFlash( __( 'Invalid username or password' ), 'Bootstrap/flash-error' );
                 //$this->Session->setFlash( __( MSG_DATA_SAVE_SUCCESS ), 'Bootstrap/flash-success' );
@@ -424,32 +426,6 @@
             return $this->redirect( array( 'controller' => 'home', 'action' => 'index' ) );
         }
 
-        public function order( $status = null )
-        {
-
-            if( !$status )
-            {
-                throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
-            }
-
-            $status = $status == 'history' ? 0 : 1;
-
-            $auth_data          = $this->Auth->user();
-            $id                 = $auth_data[ 'id' ];
-
-            $this->User->id = $id;
-            if( !$this->User->exists() )
-            {
-                throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
-            }
-            
-            $datas = $this->User->Transaction->find( 'all', array( 
-                'conditions' => array( 'Transaction.user_id' => $id, 'Transaction.status' => $status ),
-                'contain' => array( 'UserAddress' ),
-                'order' => 'Transaction.id DESC'
-            ) );
-            $this->set( compact( 'datas' ) );
-        }
 
         public function edit()
         {

@@ -24,53 +24,12 @@
         
         public function index()
         {
-            $this->loadModel( 'Product' );
-            $this->loadModel( 'Article' );
-            $this->loadModel( 'Banner' );
-            $this->loadModel( 'ProductCategory' );
-
-            $hell = $this->ProductCategory->find( 'all',
-            array(
-                'order' => array( 'ProductCategory.lft' => 'ASC' ),
-                'recursive' => 1,
-                'fields' => array( 'ProductCategory.id' ),
-                'conditions' => array( 'ProductCategory.parent_id' => null )
-                
-            ) );
-            $parent_id = array();
-            foreach ( $hell as $key ) {
-                $parent_id[] = $key[ 'ProductCategory' ][ 'id' ];
-            }
-            $product_categories = $this->ProductCategory->find( 'all',
-            array(
-                'order' => array( 'ProductCategory.lft' => 'ASC' ),
-                'recursive' => -1,
-                'conditions' => array( 'ProductCategory.parent_id' => $parent_id )
-                
-            ) );
-
-            $latest_promos = $this->Product->find( 'all', array( 'conditions' => array( 'Product.promo' => 0 ), 'order' => 'Product.id DESC', 'limit' => 3 ) );
-            $latest_news   = $this->Article->find( 'all', array( 'conditions' => array( 'Article.published_status' => 0 ), 'order' => 'Article.id DESC', 'limit' => 3 ) );
-            $banners       = $this->Banner->find( 'all', array( 'conditions' => array( 'Banner.status' => 0, 'Banner.header' => 0 ), 'order' => 'Banner.modified DESC', 'limit' => 4 ) );
-
-            $this->set( compact( 'latest_promos', 'latest_news', 'banners', 'product_categories' ) );
+            return $this->redirect( array( 'controller' => 'home', 'action' => 'index', $this->auth_role => true ) );
         }
 
         public function admin_index()
         {
-            $this->set( compact( 
-                'total_user_accounts', 
-                'month_user_accounts', 
-                'year_user_accounts', 
-                'total_income', 
-                'yesterday_income', 
-                'week_income', 
-                'total_articles',
-                'yesterday_articles',
-                'week_articles',
-                'transaction_detail',
-                'graphics'
-            ) );
+            
         }
 
         public function leader_index()

@@ -70,20 +70,29 @@ class AppController extends Controller
                                  'Site Map' => 'Site Map'
                                  );
 
-    public $field_title       = 'title';
-    public $field_name        = 'name';
-    public $field_description = 'description';
+    public $auth_role       = null;
+
     public $helpers = array( 'Html', 'Form', 'Text', 'Session', 'Paginator', 'Js' );
     
     public function isAuthorized( $user )
     {
         
-        // Administrators can access every actions
-        if( isset( $user[ 'role' ] ) && ( $user[ 'role' ] === 'admin'  || $user[ 'role' ] == '2f241db770519cd98aa5f8020f642cbc') )
+        if( isset( $this->request->params[ 'admin' ] ) )
         {
-           // return true;
+            return (bool) ( $user[ 'role' ] == 'admin' );                
+
+        } elseif( isset( $this->request->params[ 'leader' ] ) )
+        {
+            return (bool) ( $user[ 'role' ] == 'leader' );      
+
+        } elseif( isset( $this->request->params[ 'assistant' ] ) )
+        {
+            return (bool) ( $user[ 'role' ] == 'assistant' ); 
+
+        } elseif( isset( $this->request->params[ 'unit' ] ) )
+        {
+            return (bool) ( $user[ 'role' ] == 'unit' );                
         }
-        
         // Default deny
         return false;
         
@@ -111,18 +120,6 @@ class AppController extends Controller
         //$this->Session->delete('Config.language' );
         //$this->Cookie->delete( 'lang');
 
-        if( $this->Session->read( 'Config.language' ) == 'ind' ) 
-        {
-            $this->field_description = 'description_in_indonesian as description';
-            $this->field_title       = 'title_in_indonesian as title';
-            $this->field_name        = 'name_in_indonesian as name';
-        }
-
-        $field_name = $this->field_name;
-        $field_title = $this->field_title;
-        $field_description = $this->field_description;
-        $this->set( compact( 'field_description', 'field_name', 'field_title' ) );
-        
         if( isset( $this->request->params[ 'admin' ] ) )
         {
             $this->theme = 'Admin';
@@ -146,7 +143,7 @@ class AppController extends Controller
             $auth_logged_in     = $this->Auth->loggedIn();
             $auth_data          = $this->Auth->user();
             $auth_id            = $auth_data[ 'id' ];
-            $auth_role          = $auth_data[ 'role' ];
+            $auth_role          = $this->auth_role = $auth_data[ 'role' ];
             $auth_display_name  = $auth_data[ 'display_name' ];
             $auth_username      = $auth_data[ 'email' ];
             $auth_picture_dir   = '/files/user/picture/' . $auth_id . '/';

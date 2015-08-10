@@ -27,13 +27,14 @@
 	//Router::parseExtensions();
 	//Router::setExtensions(array('pdf'));
   
-    Router::connect('/',            array('controller' => 'home', 'action' => 'index', 'home', 'admin' => false));
-    Router::connect('/admin',       array('controller' => 'home', 'action' => 'index', 'home', 'admin' => true));
-    Router::connect('/leader',      array('controller' => 'home', 'action' => 'index', 'home', 'leader' => true));
-    Router::connect('/assistant',   array('controller' => 'home', 'action' => 'index', 'home', 'assistant' => true));
-    Router::connect('/unit',        array('controller' => 'home', 'action' => 'index', 'home', 'unit' => true));
+    Router::connect( '/',            array('controller' => 'home', 'action' => 'index', 'home', 'admin' => false ) );
+    Router::connect( '/admin',       array('controller' => 'home', 'action' => 'index', 'home', 'admin' => true));
+    Router::connect( '/leader',      array('controller' => 'home', 'action' => 'index', 'home', 'leader' => true));
+    Router::connect( '/assistant',   array('controller' => 'home', 'action' => 'index', 'home', 'assistant' => true));
+    Router::connect( '/unit',        array('controller' => 'home', 'action' => 'index', 'home', 'unit' => true));
 
-    Router::connect( '/login', array( 'controller' => 'users', 'action' => 'login', 'admin' => false ) );
+    Router::connect( '/login', array( 'controller' => 'users', 'action' => 'login', ) );
+    Router::connect( '/logout', array( 'controller' => 'users', 'action' => 'logout', ) );
 /**
  * ...and connect the rest of 'Pages' controller's URLs.
  */

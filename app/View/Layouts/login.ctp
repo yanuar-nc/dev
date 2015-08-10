@@ -25,7 +25,7 @@
             <div class="panel panel-signin">
                 <div class="panel-body">
                     <div class="logo text-center">
-                        <?php echo $this->Html->image( 'logo-alt.png' ); ?>
+                        <?php echo $this->Html->image( 'logo.jpg' ); ?>
                     </div>
                     <br />
                     <h4 class="text-center mb5">Do you have account ?</h4>
