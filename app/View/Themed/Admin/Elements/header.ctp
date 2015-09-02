@@ -23,6 +23,11 @@
                         <i class="fa fa-envelope-o"></i>
                         <span class="badge"></span>
                     </a>
+                </div>                
+                <div class="btn-group btn-group-list">
+                    <a href="<?= Router::url( array( 'controller' => 'mail_inboxes', 'action' => 'add' ) ) ?>" style="color: #FFF" class="btn btn-default">
+                        <i class="fa fa-plus"></i>
+                    </a>
                 </div>
                 <div class="btn-group btn-group-list">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
