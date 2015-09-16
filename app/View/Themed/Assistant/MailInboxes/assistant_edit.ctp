@@ -60,6 +60,7 @@ $tanggal_penyelesaian = date( 'd M Y', strtotime( $data[ 'limit_date' ] ) );
                 //echo $this->Form->input( 'MailInbox.Assistant', array( 'options' => $leader_assistants, 'multiple' => 'checkbox' ) );
                 ?>
                 <br>
+                <p>Pesan pembantu ketua kepada unit: </p>
                 <?= $this->Form->input( 'message_leader_assistant', array( 'required', 'class' => 'form-control' ) ); ?>                    
             </div>            
             <div class="col-sm-12">

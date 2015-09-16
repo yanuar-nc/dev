@@ -31,6 +31,7 @@
                      'jquery.cookies',
                      'ckeditor/ckeditor.js',
                      'ckeditor/adapters/jquery.js',
+                     'leader'
                      );
         echo $this->Html->script( $js );
         echo $this->fetch( 'script' );

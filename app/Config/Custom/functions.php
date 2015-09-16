@@ -118,7 +118,42 @@
         return $output;
     }
 
-    /**
+    function text_done( $status = 0, $text = array() )
+    {
+        $output = '';
+        if( is_numeric( $status ) )
+        {
+            switch( $status )
+            {
+                case 0:
+                    $output = TEXT_DONE;
+                    break;
+                case 1:
+                    $output = TEXT_NOT_DONE;
+                    break;
+            }
+        }
+        return $output;
+    }
+
+    function text_approved( $status = 0, $text = array() )
+    {
+        $output = '';
+        if( is_numeric( $status ) )
+        {
+            switch( $status )
+            {
+                case 0:
+                    $output = TEXT_NOT_APPROVED;
+                    break;
+                case 1:
+                    $output = TEXT_APPROVED;
+                    break;
+            }
+        }
+        return $output;
+    }
+        /**
      * Bootstrap functions
      */
 
@@ -159,6 +194,24 @@
                     break;
                 case 1:
                     $output = 'danger';
+                    break;
+            }
+        }
+        return $output;
+    }
+
+    function bootstrap_row_status_type2( $status = 0 )
+    {
+        $output = '';
+        if( is_numeric( $status ) )
+        {
+            switch( $status )
+            {
+                case 0:
+                    $output = 'danger';
+                    break;
+                case 1:
+                    $output = '';
                     break;
             }
         }
