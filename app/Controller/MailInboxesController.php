@@ -489,7 +489,7 @@
             $this->index();
         }
 
-        public function unit_read()
+        public function unit_read($id = null)
         {
             
             if( !$id )

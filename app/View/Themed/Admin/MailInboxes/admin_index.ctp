@@ -113,31 +113,6 @@
                                             );
                                         ?>
                                     </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <?php
-                                            echo $this->Html->link(
-                                                __( TEXT_APPROVED ),
-                                                array(
-                                                    'controller' => $var_controller,
-                                                    'action' => 'approved',
-                                                    $id
-                                                )
-                                            );
-                                        ?>
-                                    </li>
-                                    <li>
-                                        <?php
-                                            echo $this->Html->link(
-                                                __( TEXT_NOT_APPROVED ),
-                                                array(
-                                                    'controller' => $var_controller,
-                                                    'action' => 'not_approved',
-                                                    $id
-                                                )
-                                            );
-                                        ?>
-                                    </li>
                                 </ul>
                             </div><!--/ .btn-group -->
                         </th>
