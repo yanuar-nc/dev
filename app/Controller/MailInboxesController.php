@@ -21,6 +21,7 @@
             $readed_status  = array( __( TEXT_READ ), __( TEXT_UNREAD ) );
             $mail_types     = $this->MailInbox->getMailTypes();
             $this->loadModel( 'Leader' );
+            $this->loadModel( 'LeaderMail' );
 
             $this->set( compact( 'var_model', 'module_title', 'module_desc', 'module_icon', 'readed_status', 'mail_types' ) );
             
@@ -33,7 +34,8 @@
                 'conditions' => array( 'Leader.type' => 3 ),
                 'fields' => array( 'Leader.id', 'Leader.name' )
             ) );   
-            $this->set( compact( 'leader_units', 'leader_assistants' ) );   
+            
+            $this->set( compact( 'leader_units', 'leader_assistants', 'mail_types' ) );   
         }
         
         public function admin_add()
@@ -62,11 +64,49 @@
             
             //$this->layout = LAYOUT_ADMIN;
             
-            $this->Paginator->settings = array( 'order' => array( 'created' => 'DESC' ) );
+            $options[ 'contain' ]    = array( 'LeaderMail' );
+            $options[ 'order' ]      = array( 'MailInbox.id' => 'DESC' );
+            $this->Paginator->settings = $options;
             $datas = $this->Paginator->paginate( $this->model_name );
-            $this->set( compact( 'datas' ) );
+
+            //$datas = $this->MailInbox->find( 'all', $options );
+            $this->set( compact( 'datas' ) );            
         }
         
+        public function admin_edit( $id = null ) 
+        {
+            
+            if( !$id )
+            {
+                throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
+            }
+            
+            $this->MailInbox->id = $id;
+            if( !$this->MailInbox->exists() )
+            {
+                throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
+            }
+            
+            if( $this->request->is( 'post' ) || $this->request->is( 'put' ) )
+            {
+
+                //$this->set( 'x', $x );                
+                if( $this->MailInbox->saveAssociated( $this->request->data, array( 'deep' => true ) ) )
+                {
+                    $this->Session->setFlash( __( MSG_DATA_EDIT_SUCCESS ), 'Bootstrap/flash-success' );
+                    return $this->redirect( array( 'action' => ACTION_INDEX ) );
+                }
+            }
+            else
+            {
+                $leaders = $this->MailInbox->Leader->find( 'list', array( 'conditions' => array( 'type' => 1 ) ) );
+                $this->set( compact( 'leaders' ) );
+                $this->request->data = $this->MailInbox->read( null, $id );
+            }     
+
+
+        }
+
         public function admin_read( $id = null )
         {
             
@@ -109,7 +149,8 @@
 
             return $this->redirect( array( 'action' => ACTION_INDEX ) );
             
-        }        
+        }  
+
         public function admin_delete( $id = null )
         {
             
@@ -138,7 +179,68 @@
         
         public function index()
         {
+            $options[ 'joins' ] = array(
+                array( 
+                    'table' => 'leader_mails',
+                    'alias' => 'LeaderMail',
+                    'type' => 'INNER',
+                    'conditions' => array(
+                        'LeaderMail.mail_inbox_id = MailInbox.id'
+                    )
+                )
+            );
+            $options[ 'conditions' ] = array( 'LeaderMail.leader_id' => $this->auth_leader_id );
+            $options[ 'contain' ]    = array( 'LeaderMail' => array( 'conditions' => array( 'LeaderMail.leader_id' => $this->auth_leader_id ) ) );
+            $options[ 'order' ]      = array( 'MailInbox.id' => 'DESC' );
+            $this->Paginator->settings = $options;
+            $datas = $this->Paginator->paginate( $this->model_name );
+
+            //$datas = $this->MailInbox->find( 'all', $options );
+            $this->set( compact( 'datas' ) );
+        }
+
+        public function approved( $id = null )
+        {
             
+            if( !$id )
+            {
+                throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
+            }
+            
+            $this->MailInbox->id = $id;
+            if( !$this->MailInbox->exists() )
+            {
+                throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
+            }
+            if( $this->MailInbox->LeaderMail->updateAll( array( 'LeaderMail.status' => 1 ), array( 'mail_inbox_id' => $id, 'LeaderMail.leader_id' => $this->auth_leader_id ) ) )
+                 $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
+            else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
+
+            //$this->set( 'data', $this->MailInbox->read( null, $id ) );
+            return $this->redirect( array( 'action' => ACTION_INDEX ) );
+
+        }
+
+        public function not_approved( $id = null )
+        {
+            
+            if( !$id )
+            {
+                throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
+            }
+            
+            $this->MailInbox->id = $id;
+            if( !$this->MailInbox->exists() )
+            {
+                throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
+            }
+            if( $this->MailInbox->LeaderMail->updateAll( array( 'LeaderMail.status' => 0 ), array( 'mail_inbox_id' => $id, 'LeaderMail.leader_id' => $this->auth_leader_id ) ) )
+                 $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
+            else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
+
+            //$this->set( 'data', $this->MailInbox->read( null, $id ) );
+            return $this->redirect( array( 'action' => ACTION_INDEX ) );
+
         }
         
         public function add()
@@ -159,6 +261,17 @@
             }
         }
 
+        public function leader_index()
+        {
+            $options[ 'contain' ]    = array( 'LeaderMail' );
+            $options[ 'order' ]      = array( 'MailInbox.id' => 'DESC' );
+            $this->Paginator->settings = $options;
+            $datas = $this->Paginator->paginate( $this->model_name );
+
+            //$datas = $this->MailInbox->find( 'all', $options );
+            $this->set( compact( 'datas' ) );
+        }
+
         public function leader_edit( $id = null ) 
         {
             
@@ -177,8 +290,32 @@
             {
                 foreach( $this->request->data[ 'LeaderMail' ] as $key => $data )
                 {
-                    if ( $data[ 'leader_id' ] == 0 ) unset( $this->request->data[ 'LeaderMail' ][ $key ] );
+                    //if ( $data[ 'leader_id' ] == 0 ) unset( $this->request->data[ 'LeaderMail' ][ $key ] );
                 }
+
+                //$x = $this->MailInbox->Unit->find( 'all', array( 'conditions' => array( 'Unit.type' => 2, 'LeaderMail.mail_inbox' =>2 ) ) );
+                $options[ 'joins' ] = array(
+                    array( 
+                        'table' => 'leader_mails',
+                        'alias' => 'LeaderMail',
+                        'type' => 'INNER',
+                        'conditions' => array(
+                            'LeaderMail.leader_id = Leader.id'
+                        )
+                    )
+                );
+                $options[ 'conditions' ] = array( 'LeaderMail.mail_inbox_id' => $id, 'Leader.type' => 2 );
+                $options[ 'fields' ] = array( 'Leader.id' );
+                $x = $this->Leader->find( 'list', $options );
+                $z = array();
+                
+                foreach( $x as $id )
+                {
+                    $z[]= $id;
+                }
+
+                $this->LeaderMail->deleteAll( array( 'Leader.id' => $z ), false );  
+                //$this->set( 'x', $x );                
                 if( $this->MailInbox->saveAssociated( $this->request->data, array( 'deep' => true ) ) )
                 {
                     $this->Session->setFlash( __( MSG_DATA_EDIT_SUCCESS ), 'Bootstrap/flash-success' );
@@ -190,6 +327,73 @@
                 $this->request->data = $this->MailInbox->read( null, $id );
             }     
 
+
+        }
+
+        public function leader_approved( $id = null )
+        {
+            
+            if( !$id )
+            {
+                throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
+            }
+            
+            $this->MailInbox->id = $id;
+            if( !$this->MailInbox->exists() )
+            {
+                throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
+            }
+            if( $this->MailInbox->updateAll( array( 'MailInbox.leader_status' => 1 ), array( 'MailInbox.id' => $id ) ) )
+                 $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
+            else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
+
+            //$this->set( 'data', $this->MailInbox->read( null, $id ) );
+            return $this->redirect( array( 'action' => ACTION_INDEX ) );
+        }
+
+        public function leader_not_approved( $id = null )
+        {
+            if( !$id )
+            {
+                throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
+            }
+            
+            $this->MailInbox->id = $id;
+            if( !$this->MailInbox->exists() )
+            {
+                throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
+            }
+            if( $this->MailInbox->updateAll( array( 'MailInbox.leader_status' => 0 ), array( 'MailInbox.id' => $id ) ) )
+                 $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
+            else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
+
+            //$this->set( 'data', $this->MailInbox->read( null, $id ) );
+            return $this->redirect( array( 'action' => ACTION_INDEX ) );
+
+        }
+
+        public function leader_inbox_notif()
+        {
+            $this->autoRender = false;
+
+            $count = $this->MailInbox->find( 'count', array( 'conditions' => array( 'MailInbox.leader_id' => $this->auth_leader_id, 'MailInbox.leader_status' => 0 ) ) );
+            if ( $count > 0 )
+                return $count;
+        }
+
+        public function assistant_approved( $id = null )
+        {
+            $this->approved( $id );
+        }
+        
+        public function assistant_not_approved( $id = null )
+        {
+            $this->not_approved( $id );
+        } 
+
+        public function assistant_index()
+        {
+            $this->index();
         }
 
         public function assistant_edit( $id = null ) 
@@ -208,22 +412,127 @@
             
             if( $this->request->is( 'post' ) || $this->request->is( 'put' ) )
             {
+/*                
                 foreach( $this->request->data[ 'LeaderMail' ] as $key => $data )
                 {
                    // if ( $data[ 'leader_id' ] == 0 ) unset( $this->request->data[ 'LeaderMail' ][ $key ] );
                 }
+                $options[ 'joins' ] = array(
+                    array( 
+                        'table' => 'leader_mails',
+                        'alias' => 'LeaderMail',
+                        'type' => 'INNER',
+                        'conditions' => array(
+                            'LeaderMail.leader_id = Leader.id'
+                        )
+                    )
+                );
+                $options[ 'conditions' ] = array( 'LeaderMail.mail_inbox_id' => $id, 'LeaderMail.status' => 0, 'Leader.type' => 3 );
+                $options[ 'fields' ] = array( 'Leader.id' );
+                $x = $this->Leader->find( 'list', $options );
+*/
+                $options[ 'joins' ] = array(
+                    array( 
+                        'table' => 'leader_mails',
+                        'alias' => 'LeaderMail',
+                        'type' => 'INNER',
+                        'conditions' => array(
+                            'LeaderMail.leader_id = Leader.id'
+                        )
+                    )
+                );
+                $options[ 'conditions' ] = array( 'LeaderMail.mail_inbox_id' => $id, 'Leader.type' => 3 );
+                $options[ 'fields' ] = array( 'Leader.id' );
+                $x = $this->Leader->find( 'list', $options );
+                $z = array();
+                
+                foreach( $x as $id )
+                {
+                    $z[]= $id;
+                }
+
+                $this->LeaderMail->deleteAll( array( 'Leader.id' => $z ), false );                
                 if( $this->MailInbox->saveAssociated( $this->request->data, array( 'deep' => true )  ) )
                 {
                     $this->Session->setFlash( __( MSG_DATA_EDIT_SUCCESS ), 'Bootstrap/flash-success' );
-                    //return $this->redirect( array( 'action' => ACTION_INDEX ) );
+                    return $this->redirect( array( 'action' => ACTION_INDEX ) );
                 }
             }
             else
             {
                 $this->request->data = $this->MailInbox->read( null, $id );
-            }     
-
+                $options[ 'joins' ] = array(
+                    array( 
+                        'table' => 'leader_mails',
+                        'alias' => 'LeaderMail',
+                        'type' => 'INNER',
+                        'conditions' => array(
+                            'LeaderMail.leader_id = Leader.id'
+                        )
+                    )
+                );
+                $options[ 'conditions' ] = array( 'LeaderMail.mail_inbox_id' => 2, 'LeaderMail.status' => 0, 'Leader.type' => 3 );
+                $options[ 'fields' ] = array( 'Leader.id' );
+                $x = $this->Leader->find( 'list', $options );
+                $z = array();
+                foreach( $x as $id )
+                {
+                    $z[][ 'id' ] = $id;
+                }
+                $this->set( 'x', $z );            
+            }
         }
-    }
 
-?>
+
+        public function unit_index()
+        {
+            $this->index();
+        }
+
+        public function unit_read()
+        {
+            
+            if( !$id )
+            {
+                throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
+            }
+            
+            $this->MailInbox->id = $id;
+            if( !$this->MailInbox->exists() )
+            {
+                throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
+            }
+        
+            $this->request->data = $this->MailInbox->read( null, $id );
+            $options[ 'joins' ] = array(
+                array( 
+                    'table' => 'leader_mails',
+                    'alias' => 'LeaderMail',
+                    'type' => 'INNER',
+                    'conditions' => array(
+                        'LeaderMail.leader_id = Leader.id'
+                    )
+                )
+            );
+            $options[ 'conditions' ] = array( 'LeaderMail.mail_inbox_id' => 2, 'LeaderMail.status' => 0, 'Leader.type' => 3 );
+            $options[ 'fields' ] = array( 'Leader.id' );
+            $x = $this->Leader->find( 'list', $options );
+            $z = array();
+            foreach( $x as $id )
+            {
+                $z[][ 'id' ] = $id;
+            }
+            $this->set( 'x', $z );            
+        
+        }
+
+        public function unit_approved( $id = null )
+        {
+            $this->approved( $id );
+        }
+        
+        public function unit_not_approved( $id = null )
+        {
+            $this->not_approved( $id );
+        } 
+    }

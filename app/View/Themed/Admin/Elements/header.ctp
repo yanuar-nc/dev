@@ -64,8 +64,7 @@
                             <?php echo $this->Html->link( '<i class="glyphicon glyphicon-user"></i> ' . __ ( 'My Profile' ), 
                                     array( 'controller' => 'users', 
                                            'action' => 'profile', 
-                                           $auth_id,
-                                           'admin' => true ), 
+                                           $auth_id,), 
                                     array( 'escape' => false ) ); 
                             ?>
                         </li>
@@ -74,8 +73,7 @@
                         <li>
                         <?php echo $this->Html->link( __ ( 'Email Format' ), 
                                     array( 'controller' => 'email_formats', 
-                                           'action' => 'index', 
-                                           'admin' => true,), 
+                                           'action' => 'index', ), 
                                     array( 'escape' => false ) ); 
                             ?>
                         </li>
@@ -85,7 +83,6 @@
                         <?php echo $this->Html->link( '<i class="flag-US"></i> ' . __ ( 'English' ), 
                                     array( 'controller' => 'home', 
                                            'action' => 'index', 
-                                           'admin' => true,
                                            'language' => 'eng' ), 
                                     array( 'escape' => false ) ); 
                             ?>
@@ -94,7 +91,6 @@
                         <?php echo $this->Html->link( '<i class="flag-ID"></i> ' . __ ( 'Indonesian' ), 
                                     array( 'controller' => 'home', 
                                            'action' => 'index', 
-                                           'admin' => true,
                                            'language' => 'ind' ), 
                                     array( 'escape' => false ) ); 
                             ?>
@@ -103,8 +99,7 @@
                         <li>
                             <?php echo $this->Html->link( '<i class="glyphicon glyphicon-log-out"></i> ' . __( 'Sign Out' ), 
                                     array( 'controller' => 'users', 
-                                           'action' => 'logout', 
-                                           'admin' => true ), 
+                                           'action' => 'logout', ), 
                                     array( 'escape' => false ) ); 
                             ?>
                         </li>

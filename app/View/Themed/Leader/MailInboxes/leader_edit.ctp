@@ -42,9 +42,8 @@ $tanggal_penyelesaian = date( 'd M Y', strtotime( $data[ 'limit_date' ] ) );
     ?>
         <div class="row">
             <div class="col-sm-12 mb30">
-                <p>Pesan ketua: </p>
-<div class="checkbox block"><label><input type="checkbox"> Unchecked</label></div>                
-                <?= $this->Form->select( 'MailInbox.Assistant', $leader_assistants, array( 'multiple' => 'checkbox', 'class' => 'pler', 'label' => array( 'text' => 'margin-left: 10px' ) ) ); ?>
+                <p>Pesan ketua: </p>            
+                <?= $this->Form->select( 'MailInbox.Assistant', $leader_assistants, array( 'multiple' => 'checkbox', 'class' => 'pler', 'label' => array( 'style' => 'margin-left: 10px' ), 'before' => '<span class="bangsar">' ) ); ?>
                 <?= $this->Form->input( 'message_leader', array( 'required', 'class' => 'form-control'  ) );
                 ?>
             </div>
@@ -61,6 +60,7 @@ $tanggal_penyelesaian = date( 'd M Y', strtotime( $data[ 'limit_date' ] ) );
                 //echo $this->Form->input( 'MailInbox.Assistant', array( 'options' => $leader_assistants, 'multiple' => 'checkbox' ) );
                 ?>
                 <br>
+                <p>Pesan pembantu ketua kepada unit: </p>
                 <?= $this->Form->input( 'message_leader_assistant', array( 'required', 'class' => 'form-control', 'disabled' ) ); ?>                    
             </div>            
             <div class="col-sm-12">

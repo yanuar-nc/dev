@@ -42,13 +42,11 @@ class AppController extends Controller
         'Auth'  => array(
             'loginRedirect' => array(
                 'controller' => 'home',
-                'action' => 'index',
-                'admin' => true,
+                'action' => 'index'
             ),
             'logoutRedirect' => array(
                 'controller' => 'users',
-                'action' => 'login',
-                'admin' => true,
+                'action' => 'login'
             ),  
             'authorize' => array( 'Controller' ),
             'authenticate' => array(
@@ -71,6 +69,8 @@ class AppController extends Controller
                                  );
 
     public $auth_role       = null;
+    public $auth_leader_id  = null;
+    public $auth_id         = null;
 
     public $helpers = array( 'Html', 'Form', 'Text', 'Session', 'Paginator', 'Js' );
     
@@ -142,13 +142,16 @@ class AppController extends Controller
         {
             $auth_logged_in     = $this->Auth->loggedIn();
             $auth_data          = $this->Auth->user();
-            $auth_id            = $auth_data[ 'id' ];
+            $auth_id            = $this->auth_id = $auth_data[ 'id' ];
             $auth_role          = $this->auth_role = $auth_data[ 'role' ];
             $auth_display_name  = $auth_data[ 'display_name' ];
             $auth_username      = $auth_data[ 'email' ];
             $auth_picture_dir   = '/files/user/picture/' . $auth_id . '/';
             //$auth_picture_dir   = '/files/user/picture/' . $auth_data[ 'picture_dir' ] . '/';
             $auth_picture       = $auth_picture_dir . 'thumb_' . $auth_data[ 'picture' ]; //. $auth_data[ 'picture' ];
+
+            $this->auth_leader_id = $auth_data[ 'leader_id' ];
+            //$this->auth_leader_id = $auth_data[ 'leader_id' ];
             
             $this->set(
                 compact(

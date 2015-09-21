@@ -34,12 +34,12 @@
             ?>
         </li>
              
-        <li <?php echo bootstrap_nav_active( $this->request->controller, 'emails' ); ?>>
+        <li <?php echo bootstrap_nav_active( $this->request->controller, 'mail_inboxes' ); ?>>
             <?php 
                 echo $this->Html->link(
-                    '<i class="fa fa-envelope-o"></i>&nbsp;<span>' . __( 'Subscribers Email' ) . '</span>',
+                    '<i class="fa fa-envelope-o"></i>&nbsp;<span>' . __( 'Inbox Mails' ) . '</span>',
                     array(
-                        'controller' => 'emails',
+                        'controller' => 'mail_inboxes',
                         'action' => 'index',
                         'admin' => true
                     ),
@@ -49,7 +49,7 @@
                     )
                 ); 
             ?>
-        </li>   
+        </li>  
                                           
 
     </ul>

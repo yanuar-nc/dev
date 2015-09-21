@@ -1,3 +1,4 @@
+
 <header>
     <div class="headerwrapper">
         <div class="header-left">
@@ -19,9 +20,9 @@
                 echo $this->Form->end();
                 ?>
                 <div class="btn-group btn-group-list">
-                    <a href="<?= Router::url( array( 'controller' => 'messages', 'action' => 'index' ) ) ?>" style="color: #FFF" class="btn btn-default">
+                    <a href="<?= Router::url( array( 'controller' => 'mail_inboxes', 'action' => 'index' ) ) ?>" style="color: #FFF" class="btn btn-default">
                         <i class="fa fa-envelope-o"></i>
-                        <span class="badge"></span>
+                        <span class="badge" id="InboxMessage" url="<?= Router::url( array( 'controller' => 'leader_mails', 'action' => 'checkInboxMessage' ), true) ?>"></span>
                     </a>
                 </div>
                 <div class="btn-group btn-group-list">
@@ -79,8 +80,7 @@
                         <li>
                         <?php echo $this->Html->link( '<i class="flag-US"></i> ' . __ ( 'English' ), 
                                     array( 'controller' => 'home', 
-                                           'action' => 'index', 
-                                           'admin' => true,
+                                           'action' => 'index',
                                            'language' => 'eng' ), 
                                     array( 'escape' => false ) ); 
                             ?>
@@ -88,8 +88,7 @@
                         <li>
                         <?php echo $this->Html->link( '<i class="flag-ID"></i> ' . __ ( 'Indonesian' ), 
                                     array( 'controller' => 'home', 
-                                           'action' => 'index', 
-                                           'admin' => true,
+                                           'action' => 'index',
                                            'language' => 'ind' ), 
                                     array( 'escape' => false ) ); 
                             ?>
@@ -98,8 +97,9 @@
                         <li>
                             <?php echo $this->Html->link( '<i class="glyphicon glyphicon-log-out"></i> ' . __( 'Sign Out' ), 
                                     array( 'controller' => 'users', 
-                                           'action' => 'logout', 
-                                           'admin' => true ), 
+                                           'action' => 'logout',
+                                           'assistant' => false
+                                           ), 
                                     array( 'escape' => false ) ); 
                             ?>
                         </li>

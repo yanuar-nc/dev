@@ -4,6 +4,7 @@
     {
         
         public $useTable = 'leaders';
+        //public $primaryKey = ''
     }
 
 ?>

@@ -79,7 +79,11 @@
     define( 'TEXT_EDIT',                    'Edit' ); // Alias
     define( 'TEXT_READ',                    'Read' );
     define( 'TEXT_UNREAD',                  'Unread' );
-    
+    define( 'TEXT_DONE',                    'Done' );
+    define( 'TEXT_NOT_DONE',                'Not Done' );
+    define( 'TEXT_APPROVED',                'Approved' );
+    define( 'TEXT_NOT_APPROVED',            'Not Approved' );
+
     define( 'TEXT_WELCOME', 'Welcome to administrator page' );
     define( 'TEXT_ARTICLE', 'Articles');
     define( 'TEXT_PRODUCT', 'Products');

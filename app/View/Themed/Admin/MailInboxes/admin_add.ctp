@@ -78,14 +78,30 @@
             </div>            
             <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo __( 'Tanggal Terima' ); ?></label>
-                <div class="col-sm-10">
-                    <?php echo $this->Form->input( 'received_date', array( 'required', 'class' => 'form-control', 'placeholder' => __( 'Asal Surat' )  ) ); ?>
-                </div>
-            </div>            
+                <div class="row">
+                    <div class="col-md-1">
+                        <?= $this->Form->day( 'received_date', array( 'required', 'class' => 'form-control', 'empty' => 'Tanggal'  ) ); ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?= $this->Form->month( 'received_date', array( 'required', 'class' => 'form-control', 'empty' => 'Bulan' ) ); ?>
+                    </div>
+                    <div class="col-md-1">
+                        <?= $this->Form->year( 'received_date', 2000, date( 'Y' ), array( 'required', 'class' => 'form-control', 'empty' => 'Tahun' ) ); ?>
+                    </div>
+                </div> 
+            </div>    
             <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo __( 'Tanggal Penyelesaian' ); ?></label>
-                <div class="col-sm-10">
-                    <?php echo $this->Form->input( 'limit_date', array(  'required', 'class' => 'form-control', 'placeholder' => __( 'Asal Surat' )  ) ); ?>
+                <div class="row">
+                    <div class="col-md-1">
+                        <?= $this->Form->day( 'limit_date', array( 'required', 'class' => 'form-control', 'empty' => 'Tanggal'  ) ); ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?= $this->Form->month( 'limit_date', array( 'required', 'class' => 'form-control', 'empty' => 'Bulan' ) ); ?>
+                    </div>
+                    <div class="col-md-1">
+                        <?= $this->Form->year( 'limit_date', 2000, date( 'Y' ), array( 'required', 'class' => 'form-control', 'empty' => 'Tahun' ) ); ?>
+                    </div>
                 </div>
             </div>            
             <div class="form-group">

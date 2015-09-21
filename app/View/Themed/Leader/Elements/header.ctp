@@ -1,3 +1,4 @@
+
 <header>
     <div class="headerwrapper">
         <div class="header-left">
@@ -19,9 +20,9 @@
                 echo $this->Form->end();
                 ?>
                 <div class="btn-group btn-group-list">
-                    <a href="<?= Router::url( array( 'controller' => 'messages', 'action' => 'index' ) ) ?>" style="color: #FFF" class="btn btn-default">
+                    <a href="<?= Router::url( array( 'controller' => 'mail_inboxes', 'action' => 'index' ) ) ?>" style="color: #FFF" class="btn btn-default">
                         <i class="fa fa-envelope-o"></i>
-                        <span class="badge"></span>
+                        <span class="badge" id="InboxMessage" url="<?= Router::url( array( 'controller' => 'mail_inboxes', 'action' => 'inbox_notif' ), true) ?>"></span>
                     </a>
                 </div>
                 <div class="btn-group btn-group-list">

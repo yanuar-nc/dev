@@ -4,7 +4,7 @@
     {
         
         public $belongsTo = array( 'Leader' );
-        //public $hasMany   = array( 'LeaderMail' );
+        public $hasMany   = array( 'LeaderMail' );
 
         public $hasAndBelongsToMany = array(
             'Assistant' => array(
@@ -12,7 +12,8 @@
                 'joinTable' => 'leader_mails',
                 'foreignKey' => 'mail_inbox_id',
                 'associationForeignKey' => 'leader_id',
-                'unique' => true,
+                'unique' => false,
+                //'finderQuery' => 'SELECT * FROM leaders WHERE type=2'
                 //'conditions' => array( 'Assistant.type' => 2 )
             ),
             'Unit' => array(
@@ -20,7 +21,7 @@
                 'joinTable' => 'leader_mails',
                 'foreignKey' => 'mail_inbox_id',
                 'associationForeignKey' => 'leader_id',
-                'unique' => true,
+                'unique' => false,
                 //'conditions' => array( 'Unit.type' => 3 )
             )
         );

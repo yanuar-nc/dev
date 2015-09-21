@@ -27,7 +27,7 @@
 	//Router::parseExtensions();
 	//Router::setExtensions(array('pdf'));
   
-    Router::connect( '/',            array('controller' => 'home', 'action' => 'index', 'home', 'admin' => false ) );
+    //Router::connect( '/',            array('controller' => 'home', 'action' => 'index', 'home', 'admin' => false ) );
     Router::connect( '/admin',       array('controller' => 'home', 'action' => 'index', 'home', 'admin' => true));
     Router::connect( '/leader',      array('controller' => 'home', 'action' => 'index', 'home', 'leader' => true));
     Router::connect( '/assistant',   array('controller' => 'home', 'action' => 'index', 'home', 'assistant' => true));
