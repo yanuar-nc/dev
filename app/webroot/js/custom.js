@@ -543,4 +543,5 @@ jQuery(document).ready(function() {
         
     });
 
+    jQuery("a[data-rel^='prettyPhoto']").prettyPhoto();
 });

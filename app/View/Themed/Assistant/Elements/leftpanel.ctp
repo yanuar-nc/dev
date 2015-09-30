@@ -40,8 +40,7 @@
                     '<i class="fa fa-envelope-o"></i>&nbsp;<span>' . __( 'Subscribers Email' ) . '</span>',
                     array(
                         'controller' => 'emails',
-                        'action' => 'index',
-                        'admin' => true
+                        'action' => 'index'
                     ),
                     array(
                         'escape' => false,

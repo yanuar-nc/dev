@@ -3,7 +3,15 @@ $data = $this->request->data[ 'MailInbox' ];
 $tanggal_terima = date( 'd M Y', strtotime( $data[ 'received_date' ] ) );
 $tanggal_penyelesaian = date( 'd M Y', strtotime( $data[ 'limit_date' ] ) );
 
+$picture_dir    = '/itpm/files/mail_inbox/file/' . $data[ 'id' ] . '/';
+$picture        = $picture_dir . '' . $data[ 'file' ];
 ?>
+<div class="row mb10">
+    <div class="col-md-3 col-md-offset-9">
+        <a href="<?= $picture ?>" data-rel="prettyPhoto" class="btn btn-primary btn-block"><i class="fa fa-envelope-o"></i> &nbsp; Lihat Surat</a>
+    </div>
+</div>
+
 <div class="panel panel-default">
     <div class="panel-body">
         <div class="row">
@@ -77,7 +85,7 @@ $tanggal_penyelesaian = date( 'd M Y', strtotime( $data[ 'limit_date' ] ) );
         <div class="mb30"></div>
         
         <div class="well nomargin">
-            Thank you for your business. Please make sure all cheques payable to <strong>ThemeForest Web Services, Inc.</strong> Account No. 54353535
+            <center>Stikom Binaniaga Bogor.</center>
         </div>
         
         

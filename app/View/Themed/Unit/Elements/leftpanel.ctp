@@ -40,8 +40,7 @@
                     '<i class="fa fa-envelope-o"></i>&nbsp;<span>' . __( 'Inbox Mails' ) . '</span>',
                     array(
                         'controller' => 'mail_inboxes',
-                        'action' => 'index',
-                        'admin' => true
+                        'action' => 'index'
                     ),
                     array(
                         'escape' => false,

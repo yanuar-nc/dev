@@ -35,7 +35,7 @@ class AppController extends Controller
     
     const DEFAULT_LANGUAGE = 'eng';
     public $components = array( 
-        'DebugKit.Toolbar',
+        //'DebugKit.Toolbar',
         'Paginator',
         'Session',
         'Cookie',

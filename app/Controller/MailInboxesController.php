@@ -54,9 +54,17 @@
                     $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
                 }
             }
+            $created = date( 'Y-m-d h:i:s' );
+            $data  = $this->MailInbox->find( 'first', array( 'fields' => array( 'no_arsip' ), 'order' => 'MailInbox.id DESC', 'conditions' => array( 'MailInbox.created LIKE ' => date('Y-m-d').'%' ) ) );
+            $value = isset( $data[ 'MailInbox' ][ 'no_arsip'] ) ? $data[ 'MailInbox' ][ 'no_arsip'] : 0;
+            $len   = strlen( $value );
+            $max   = (int) substr($value, 3, $len);
+            $max++;
+            $newid = 'AS-' . sprintf("%04s", $max);
             
             $leaders = $this->MailInbox->Leader->find( 'list', array( 'conditions' => array( 'type' => 1 ) ) );
-            $this->set( compact( 'leaders' ) );
+            $this->request->data[ 'MailInbox' ][ 'no_arsip' ] = $newid;
+            $this->set( compact( 'leaders', 'newid' ) );
         }
 
         public function admin_index()
@@ -288,10 +296,10 @@
             
             if( $this->request->is( 'post' ) || $this->request->is( 'put' ) )
             {
-                foreach( $this->request->data[ 'LeaderMail' ] as $key => $data )
+                /*foreach( $this->request->data[ 'LeaderMail' ] as $key => $data )
                 {
                     //if ( $data[ 'leader_id' ] == 0 ) unset( $this->request->data[ 'LeaderMail' ][ $key ] );
-                }
+                }*/
 
                 //$x = $this->MailInbox->Unit->find( 'all', array( 'conditions' => array( 'Unit.type' => 2, 'LeaderMail.mail_inbox' =>2 ) ) );
                 $options[ 'joins' ] = array(

@@ -9,7 +9,7 @@
         <title><?= $title_for_layout; ?></title>
 
 		<?php
-		$theme_styles   = array( 'style.default','bootstrap-wysihtml5', 'flags/flags' );
+		$theme_styles   = array( 'style.default','bootstrap-wysihtml5', 'flags/flags', 'prettyPhoto' );
 
 		echo $this->Html->css( $theme_styles, array( 'media' => 'screen' ), array( 'block' => 'css' ) );
         echo $this->fetch( 'css' );
@@ -31,6 +31,7 @@
                      'jquery.cookies',
                      'ckeditor/ckeditor.js',
                      'ckeditor/adapters/jquery.js',
+                     'jquery.prettyPhoto',
                      'leader'
                      );
         echo $this->Html->script( $js );

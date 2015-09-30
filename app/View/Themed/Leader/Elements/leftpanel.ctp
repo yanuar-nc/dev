@@ -41,7 +41,6 @@
                     array(
                         'controller' => 'mail_inboxes',
                         'action' => 'index',
-                        'admin' => true
                     ),
                     array(
                         'escape' => false,
