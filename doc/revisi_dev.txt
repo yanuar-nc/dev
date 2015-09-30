@@ -1,0 +1,8 @@
+Leader
+	Mail Inbox
+		Preview ( untuk membaca surat, bentuk image )
+		Edit belum di redirect ke index
+Admin
+Unit
+	MailInbox
+		Read ( Just Read )

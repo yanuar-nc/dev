@@ -295,11 +295,11 @@ App::uses( 'SimplePasswordHasher', 'Controller/Component/Auth' );
             $this->Session->setFlash( __( MSG_DATA_EDIT_FAILED ), 'Bootstrap/flash-error' );
             return $this->redirect( array( 'action' => ACTION_INDEX ) );
         }      
-
+/*
         public function leader_login( $id = null )
         {
             $this->login();
-        }
+        }*/
         public function profile( $id = null )
         {
 

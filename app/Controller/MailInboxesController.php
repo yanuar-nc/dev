@@ -319,7 +319,7 @@
                 if( $this->MailInbox->saveAssociated( $this->request->data, array( 'deep' => true ) ) )
                 {
                     $this->Session->setFlash( __( MSG_DATA_EDIT_SUCCESS ), 'Bootstrap/flash-success' );
-                    //return $this->redirect( array( 'action' => ACTION_INDEX ) );
+                    return $this->redirect( array( 'action' => ACTION_INDEX ) );
                 }
             }
             else
