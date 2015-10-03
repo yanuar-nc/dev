@@ -26,6 +26,12 @@
                     </a>
                 </div>
                 <div class="btn-group btn-group-list">
+                    <a href="<?= Router::url( array( 'controller' => 'outboxes', 'action' => 'index' ) ) ?>" style="color: #FFF" class="btn btn-default">
+                        <i class="fa fa-envelope-o"></i>
+                        <span class="badge" id="OutboxMessage" url="<?= Router::url( array( 'controller' => 'outbox_leaders', 'action' => 'checkOutboxMessage', $this->request->prefix => false ), true) ?>"></span>
+                    </a>
+                </div>
+                <div class="btn-group btn-group-list">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-money"></i>
                         <span class="badge"></span>

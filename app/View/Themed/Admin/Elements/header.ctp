@@ -30,10 +30,6 @@
                     </a>
                 </div>
                 <div class="btn-group btn-group-list">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-money"></i>
-                        <span class="badge"></span>
-                    </button>
                     <div class="dropdown-menu pull-right">
                         <h5><?= __( 'Payment Confirmation' ) ?></h5>
                         <ul class="media-list dropdown-list">

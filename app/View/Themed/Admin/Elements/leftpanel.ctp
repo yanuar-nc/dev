@@ -37,9 +37,26 @@
         <li <?php echo bootstrap_nav_active( $this->request->controller, 'mail_inboxes' ); ?>>
             <?php 
                 echo $this->Html->link(
-                    '<i class="fa fa-envelope-o"></i>&nbsp;<span>' . __( 'Inbox Mails' ) . '</span>',
+                    '<i class="fa fa-envelope-o"></i>&nbsp;<span>' . __( 'Surat Masuk' ) . '</span>',
                     array(
                         'controller' => 'mail_inboxes',
+                        'action' => 'index',
+                        'admin' => true
+                    ),
+                    array(
+                        'escape' => false,
+                        'class' => ''
+                    )
+                ); 
+            ?>
+        </li>  
+             
+        <li <?php echo bootstrap_nav_active( $this->request->controller, 'outboxes' ); ?>>
+            <?php 
+                echo $this->Html->link(
+                    '<i class="fa fa-send"></i>&nbsp;<span>' . __( 'Surat Keluar' ) . '</span>',
+                    array(
+                        'controller' => 'outboxes',
                         'action' => 'index',
                         'admin' => true
                     ),
