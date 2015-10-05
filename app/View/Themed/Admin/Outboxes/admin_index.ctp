@@ -108,7 +108,7 @@
                             $row    = $data[ $var_model ];
                             $id     = $row[ 'id' ];
 
-                            $created   = date( 'D, d F Y H:i:s', strtotime( $row[ 'created' ] ) );
+                            $created   = date( 'D, d F Y', strtotime( $row[ 'created' ] ) );
                     ?>
 
                     <tr class="">
@@ -140,6 +140,19 @@
                             <p> Tipe Surat : <small><?= $mail_types[ $row [ 'mail_type' ] ]; ?></small> </p>
                         </td>
                         <td><?php echo $created; ?></td>
+                        <td>
+                            <?php
+                                foreach( $data[ 'Leader' ] as $outbox ):
+
+                                    $leader = $outbox[ 'name' ];
+                                    $status = $outbox[ 'OutboxLeader' ][ 'status' ];
+                                    echo $leader . " = " . text_approved( $status ) . "<br>";
+                            ?>
+
+                            <?php
+                                endforeach;
+                            ?>
+                        </td>
                     </tr>
 
                     <?php endforeach; ?>

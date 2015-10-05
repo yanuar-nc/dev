@@ -28,6 +28,7 @@
 
         public function admin_index()
         {
+            $options[ 'recursive' ] = 1;
             
             $options[ 'order' ]      = array( 'Outbox.id' => 'DESC' );
             $this->Paginator->settings = $options;

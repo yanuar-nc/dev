@@ -140,6 +140,18 @@
                             <p> Tipe Surat : <small><?= $mail_types[ $row [ 'mail_type' ] ]; ?></small> </p>
                         </td>
                         <td><?php echo $created; ?></td>
+                        <td>
+                            <?php
+                                foreach( $data[ 'OutboxLeader' ] as $outbox )
+                                {   
+                                    if( $outbox[ 'leader_id' ] == $auth_data[ 'leader_id' ] )
+                                    {
+                                        $status = $outbox[ 'status' ];
+                                        echo text_approved( $status ) ;
+                                    }
+                                }
+                            ?>
+                        </td>
                     </tr>
 
                     <?php endforeach; ?>
