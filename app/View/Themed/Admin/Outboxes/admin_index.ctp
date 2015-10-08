@@ -1,15 +1,4 @@
 
-<div class="panel panel-default">
-    
-    <div class="panel-heading">
-        
-        <div class="panel-btns">
-            <a href="" class="panel-minimize tooltips" data-toggle="tooltip" title="Minimize Panel"><i class="fa fa-minus"></i></a>
-        </div><!--/ .ppanel-btns -->
-        
-        <h4 class="panel-title"><?php echo $module_title; ?></h4>
-        
-    </div><!--/ .panel-heading -->
     
     <div class="panel-body">
         
@@ -88,18 +77,6 @@
         
             <table class="table table-bordered table-hover">
 
-                <thead>
-
-                    <tr>
-                        <th width="10%"></th>
-                        <th width="5%"><?php echo $this->Paginator->sort( $var_model . '.id', 'Id' ); ?></th>
-                        <th width="40%"><?php echo $this->Paginator->sort( $var_model . '.perihal', 'Perihal' ); ?></th>
-                        <th width="20%"><?php echo $this->Paginator->sort( $var_model . '.created', __( 'Created' ) ); ?></th>
-                        <th width="20%"><?php echo $this->Paginator->sort( 'LeaderMail.status', __( 'Status' ) ); ?></th>
-                    </tr>
-
-                </thead>
-
                 <tbody>
 
                     <?php
@@ -112,46 +89,25 @@
                     ?>
 
                     <tr class="">
-                        <th>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-white dropdown-toggle" data-toggle="dropdown">
-                                    <?php echo __( BTN_ACTION ); ?> &nbsp; <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <?php
-                                            echo $this->Html->link(
-                                                __( TEXT_READ ),
-                                                array(
-                                                    'controller' => $var_controller,
-                                                    'action' => ACTION_EDIT,
-                                                    $id
-                                                )
-                                            );
-                                        ?>
-                                    </li>
-                                </ul>
-                            </div><!--/ .btn-group -->
-                        </th>
-                        <td><?php echo $id; ?></td>
                         <td>
-                            <h4><?php echo $row[ 'perihal' ] ?> / <small><?= $mail_types[ $row[ 'mail_type' ] ] ?></small></h4>
-                            <p>Lampiran: <br><small><?= $row[ 'lampiran' ] ?></small></p>
+                            <h4>
+                                <?php
+                                    echo $this->Html->link(
+                                        $row[ 'perihal' ],
+                                        array(
+                                            'controller' => $var_controller,
+                                            'action' => ACTION_EDIT,
+                                            $id
+                                        )
+                                    );
+                                ?> / 
+                                <small><?= $mail_types[ $row[ 'mail_type' ] ] ?></small>
+                            </h4>
+                            <p>Lampiran: <small><?= $row[ 'lampiran' ] ?></small></p>
                             <p> Tipe Surat : <small><?= $mail_types[ $row [ 'mail_type' ] ]; ?></small> </p>
-                        </td>
-                        <td><?php echo $created; ?></td>
-                        <td>
-                            <?php
-                                foreach( $data[ 'Leader' ] as $outbox ):
-
-                                    $leader = $outbox[ 'name' ];
-                                    $status = $outbox[ 'OutboxLeader' ][ 'status' ];
-                                    echo $leader . " = " . text_approved( $status ) . "<br>";
-                            ?>
-
-                            <?php
-                                endforeach;
-                            ?>
+                            <small>
+                                <i class="fa fa-calendar"> &nbsp; <?= $created ?></i>
+                            </small>
                         </td>
                     </tr>
 
@@ -166,4 +122,3 @@
         
     </div><!--/ .panel-body -->
     
-</div><!--/ .panel -->

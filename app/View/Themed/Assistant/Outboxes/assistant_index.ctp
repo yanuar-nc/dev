@@ -1,17 +1,4 @@
 
-<div class="panel panel-default">
-    
-    <div class="panel-heading">
-        
-        <div class="panel-btns">
-            <a href="" class="panel-minimize tooltips" data-toggle="tooltip" title="Minimize Panel"><i class="fa fa-minus"></i></a>
-        </div><!--/ .ppanel-btns -->
-        
-        <h4 class="panel-title"><?php echo $module_title; ?></h4>
-        
-    </div><!--/ .panel-heading -->
-    
-    <div class="panel-body">
         
         <div class="btn-toolbar">
         
@@ -72,7 +59,6 @@
                 </button>
                 
                 <ul class="dropdown-menu" role="menu">
-                    <li><?php echo $this->Paginator->sort( $var_model . '.id', 'Id' ); ?></li>
                     <li><?php echo $this->Paginator->sort( $var_model . '.perihal', __( 'Perihal' ) ); ?></li>
                     <li><?php echo $this->Paginator->sort( $var_model . '.leader_status', __( 'Status' ) ); ?></li>
                     <li><?php echo $this->Paginator->sort( $var_model . '.received_date', __( 'Received Date' ) ); ?></li>
@@ -84,19 +70,10 @@
         
         <br />
         
-        <div class="table-responsive">
         
             <table class="table table-bordered table-hover">
 
                 <thead>
-
-                    <tr>
-                        <th width="10%"></th>
-                        <th width="5%"><?php echo $this->Paginator->sort( $var_model . '.id', 'Id' ); ?></th>
-                        <th width="40%"><?php echo $this->Paginator->sort( $var_model . '.perihal', 'Perihal' ); ?></th>
-                        <th width="20%"><?php echo $this->Paginator->sort( $var_model . '.created', __( 'Created' ) ); ?></th>
-                        <th width="20%"><?php echo $this->Paginator->sort( 'LeaderMail.status', __( 'Status' ) ); ?></th>
-                    </tr>
 
                 </thead>
 
@@ -109,48 +86,39 @@
                             $id     = $row[ 'id' ];
 
                             $created   = date( 'D, d F Y H:i:s', strtotime( $row[ 'created' ] ) );
+                            foreach( $data[ 'OutboxLeader' ] as $outbox )
+                            {   
+                                if( $outbox[ 'leader_id' ] == $auth_data[ 'leader_id' ] )
+                                {
+                                    $status = $outbox[ 'status' ];
+                                    
+                                }
+                            }
                     ?>
 
-                    <tr class="">
-                        <th>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-white dropdown-toggle" data-toggle="dropdown">
-                                    <?php echo __( BTN_ACTION ); ?> &nbsp; <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <?php
-                                            echo $this->Html->link(
-                                                __( TEXT_READ ),
-                                                array(
-                                                    'controller' => $var_controller,
-                                                    'action' => ACTION_EDIT,
-                                                    $id
-                                                )
-                                            );
-                                        ?>
-                                    </li>
-                                </ul>
-                            </div><!--/ .btn-group -->
-                        </th>
-                        <td><?php echo $id; ?></td>
+                    <tr class="<?= bootstrap_row_status_type2( $status ) ?>">
                         <td>
-                            <h4><?php echo $row[ 'perihal' ] ?> / <small><?= $mail_types[ $row[ 'mail_type' ] ] ?></small></h4>
+                            <h4>
+                                <?php
+                                    echo $this->Html->link(
+                                        __( $row[ 'perihal' ] ),
+                                        array(
+                                            'controller' => $var_controller,
+                                            'action' => 'read',
+                                            $id
+                                        )
+                                    );
+                                ?>
+                                / 
+                                <small>
+                                    <?php
+                                        echo text_approved( $status ) ;
+                                    ?>                                    
+                                </small>
+                            </h4>
                             <p>Lampiran: <br><small><?= $row[ 'lampiran' ] ?></small></p>
                             <p> Tipe Surat : <small><?= $mail_types[ $row [ 'mail_type' ] ]; ?></small> </p>
-                        </td>
-                        <td><?php echo $created; ?></td>
-                        <td>
-                            <?php
-                                foreach( $data[ 'OutboxLeader' ] as $outbox )
-                                {   
-                                    if( $outbox[ 'leader_id' ] == $auth_data[ 'leader_id' ] )
-                                    {
-                                        $status = $outbox[ 'status' ];
-                                        echo text_approved( $status ) ;
-                                    }
-                                }
-                            ?>
+                            <o><?php echo $created; ?></o>
                         </td>
                     </tr>
 
@@ -159,10 +127,5 @@
                 </tbody>
             </table>
         
-        </div><!--/ .table-responsive -->
-        
         <?php echo $this->Element( 'Administrator/pagination' ); ?>
         
-    </div><!--/ .panel-body -->
-    
-</div><!--/ .panel -->

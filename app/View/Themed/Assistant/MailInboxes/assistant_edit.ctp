@@ -1,5 +1,6 @@
 <?php
-$data = $this->request->data[ 'MailInbox' ];
+$datas = $this->request->data;
+$data  = $datas[ 'MailInbox' ];
 $tanggal_terima = date( 'd M Y', strtotime( $data[ 'received_date' ] ) );
 $tanggal_penyelesaian = date( 'd M Y', strtotime( $data[ 'limit_date' ] ) );
 
@@ -7,8 +8,41 @@ $picture_dir    = '/itpm/files/mail_inbox/file/' . $data[ 'id' ] . '/';
 $picture        = $picture_dir . '' . $data[ 'file' ];
 ?>
 <div class="row mb10">
-    <div class="col-md-3 col-md-offset-9">
+
+    <div class="col-md-3">
+        
         <a href="<?= $picture ?>" data-rel="prettyPhoto" class="btn btn-primary btn-block"><i class="fa fa-envelope-o"></i> &nbsp; Lihat Surat</a>
+    </div>
+    <div class="col-md-3 col-md-offset-6">
+        <?php
+        foreach( $datas[ 'LeaderMail' ] as $leader_mail )
+        {
+            if( $leader_mail[ 'leader_id' ] == $auth_data[ 'leader_id' ] )
+            {
+                if( $leader_mail[ 'status' ] == 0 )
+                    echo $this->Html->link(
+                            __( TEXT_APPROVED ),
+                            array(
+                                'controller' => $var_controller,
+                                'action' => 'approved',
+                                $data[ 'id' ]
+                            ),
+                            array( 'class' => 'btn btn-white pull-right')
+                        );   
+                else
+                    echo $this->Html->link(
+                            __( TEXT_NOT_APPROVED ),
+                            array(
+                                'controller' => $var_controller,
+                                'action' => 'not_approved',
+                                $data[ 'id' ]
+                            ),
+                            array( 'class' => 'btn btn-white pull-right')
+                        );   
+
+            }
+        }
+        ?>
     </div>
 </div>
 

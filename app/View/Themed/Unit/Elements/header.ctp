@@ -25,30 +25,13 @@
                         <span class="badge" id="InboxMessage" url="<?= Router::url( array( 'controller' => 'leader_mails', 'action' => 'checkInboxMessage', $this->request->prefix => false ), true) ?>"></span>
                     </a>
                 </div>
+                
                 <div class="btn-group btn-group-list">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-money"></i>
-                        <span class="badge"></span>
-                    </button>
-                    <div class="dropdown-menu pull-right">
-                        <h5><?= __( 'Payment Confirmation' ) ?></h5>
-                        <ul class="media-list dropdown-list">
-                        </ul>
-                        <!--
-                        <div class="dropdown-footer text-center">
-                            <a href="" class="link">See All Messages</a>
-                        </div>
-                        -->
-                    </div><!-- dropdown-menu -->
-                    <a href="<?= $this->request->here ?>" style="color: #FFF" class="btn btn-default">
-                        <i class="glyphicon glyphicon-refresh"></i>
-                        <small><?= __( BTN_REFRESH ) ?></small>
+                    <a href="<?= Router::url( array( 'controller' => 'outboxes', 'action' => 'index' ) ) ?>" style="color: #FFF" class="btn btn-default">
+                        <i class="fa fa-send"></i>
+                        <span class="badge" id="OutboxMessage" url="<?= Router::url( array( 'controller' => 'outbox_leaders', 'action' => 'checkOutboxMessage', $this->request->prefix => false ), true) ?>"></span>
                     </a>
-
-
                 </div>
-
-
                         
                 <div class="btn-group btn-group-option">
 

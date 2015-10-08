@@ -42,12 +42,19 @@ class AppController extends Controller
         'Auth'  => array(
             'loginRedirect' => array(
                 'controller' => 'home',
-                'action' => 'index'
+                'action' => 'index',
+                'leader' => false,
+                'assistant' => false,
+                'admin' => false,
+                'unit' => false
             ),
             'logoutRedirect' => array(
                 'controller' => 'users',
                 'action' => 'login',
                 'leader' => false,
+                'assistant' => false,
+                'admin' => false,
+                'unit' => false
                 
             ),  
             'authorize' => array( 'Controller' ),

@@ -55,7 +55,7 @@
                 }
             }
             $created = date( 'Y-m-d h:i:s' );
-            $data  = $this->MailInbox->find( 'first', array( 'fields' => array( 'no_arsip' ), 'order' => 'MailInbox.id DESC', 'conditions' => array( 'MailInbox.created LIKE ' => date('Y-m-d').'%' ) ) );
+            $data  = $this->MailInbox->find( 'first', array( 'fields' => array( 'no_arsip' ), 'order' => 'MailInbox.id DESC' ) );
             $value = isset( $data[ 'MailInbox' ][ 'no_arsip'] ) ? $data[ 'MailInbox' ][ 'no_arsip'] : 0;
             $len   = strlen( $value );
             $max   = (int) substr($value, 3, $len);
@@ -327,7 +327,7 @@
                 if( $this->MailInbox->saveAssociated( $this->request->data, array( 'deep' => true ) ) )
                 {
                     $this->Session->setFlash( __( MSG_DATA_EDIT_SUCCESS ), 'Bootstrap/flash-success' );
-                    //return $this->redirect( array( 'action' => ACTION_INDEX ) );
+                    return $this->redirect( array( 'action' => ACTION_INDEX ) );
                 }
             }
             else
@@ -404,7 +404,7 @@
             $this->index();
         }
 
-        public function assistant_edit( $id = null ) 
+        public function assistant_read( $id = null ) 
         {
             
             if( !$id )
@@ -495,6 +495,8 @@
         public function unit_index()
         {
             $this->index();
+            
+            //$this->render( '/MailInboxes/assistant_index' );            
         }
 
         public function unit_read($id = null)
