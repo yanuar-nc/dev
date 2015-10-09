@@ -7,10 +7,10 @@ $picture_dir    = '/itpm/files/outbox/file/' . $datas[ 'id' ] . '/';
 $picture        = $picture_dir . '' . $datas[ 'file' ];
 ?>
 <div class="row mb10">
-    <div class="col-md-3 col-md-offset">
+    <div class="col-md-3">
         <a href="<?= $picture ?>" data-rel="prettyPhoto" class="btn btn-primary btn-block"><i class="fa fa-envelope-o"></i> &nbsp; Lihat Surat</a>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 col-md-offset-6">
         <?php
         foreach( $data[ 'OutboxLeader' ] as $outbox_leader )
         {

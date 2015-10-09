@@ -60,8 +60,7 @@
                 
                 <ul class="dropdown-menu" role="menu">
                     <li><?php echo $this->Paginator->sort( $var_model . '.perihal', __( 'Perihal' ) ); ?></li>
-                    <li><?php echo $this->Paginator->sort( $var_model . '.leader_status', __( 'Status' ) ); ?></li>
-                    <li><?php echo $this->Paginator->sort( $var_model . '.received_date', __( 'Received Date' ) ); ?></li>
+                    <li><?php echo $this->Paginator->sort( $var_model . '.id', __( 'Tanggal' ) ); ?></li>
                 </ul>
                 
             </div><!--/ .btn-group -->

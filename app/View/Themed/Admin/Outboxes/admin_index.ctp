@@ -63,8 +63,6 @@
                 <ul class="dropdown-menu" role="menu">
                     <li><?php echo $this->Paginator->sort( $var_model . '.id', 'Id' ); ?></li>
                     <li><?php echo $this->Paginator->sort( $var_model . '.perihal', __( 'Perihal' ) ); ?></li>
-                    <li><?php echo $this->Paginator->sort( $var_model . '.leader_status', __( 'Status' ) ); ?></li>
-                    <li><?php echo $this->Paginator->sort( $var_model . '.received_date', __( 'Received Date' ) ); ?></li>
                 </ul>
                 
             </div><!--/ .btn-group -->
@@ -72,8 +70,6 @@
         </div><!--/ .btn-toolbar -->
         
         <br />
-        
-        <div class="table-responsive">
         
             <table class="table table-bordered table-hover">
 
@@ -104,7 +100,15 @@
                                 <small><?= $mail_types[ $row[ 'mail_type' ] ] ?></small>
                             </h4>
                             <p>Lampiran: <small><?= $row[ 'lampiran' ] ?></small></p>
-                            <p> Tipe Surat : <small><?= $mail_types[ $row [ 'mail_type' ] ]; ?></small> </p>
+                            <p>Untuk: <small>
+                                <?php
+                                foreach( $data[ 'Leader' ] as $leader ):
+
+                                    $status = $leader[ 'OutboxLeader' ][ 'status' ];
+                                    echo $leader[ 'name' ] . ' ( ' .text_approved( $status ) . ' ) ' . " &nbsp; / &nbsp; ";
+                                endforeach;
+                                ?>
+                            </small></p>
                             <small>
                                 <i class="fa fa-calendar"> &nbsp; <?= $created ?></i>
                             </small>
@@ -115,8 +119,6 @@
 
                 </tbody>
             </table>
-        
-        </div><!--/ .table-responsive -->
         
         <?php echo $this->Element( 'Administrator/pagination' ); ?>
         

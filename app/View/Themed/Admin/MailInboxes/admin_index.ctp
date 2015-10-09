@@ -110,7 +110,7 @@
                                 <i class="fa fa-calendar"></i> Dibuat: &nbsp; <?= $created ?> &nbsp;
                                 <i class="fa fa-calendar"></i> Tanggal akhir: &nbsp; <?= $limit_date ?> &nbsp;
                                 <i class="fa fa-user"></i> Dari: &nbsp; <?= $row[ 'asal_surat' ]; ?> &nbsp;
-                                <i class="fa fa-bullhorn"></i> Dari: &nbsp; <?= text_approved( $status ); ?> &nbsp;
+                                <i class="fa fa-bullhorn"></i> Status: &nbsp; <?= text_approved( $status ); ?> &nbsp;
 
                             </small>
                         </td>

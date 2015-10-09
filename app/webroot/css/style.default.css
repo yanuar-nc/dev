@@ -109,7 +109,8 @@ a:focus {
 
 .headerwrapper .header-left .logo {
     display: inline-block;
-    margin-top: 5px;
+    margin-top: 10px;
+    max-width: 150px;
     float: left;
 }
 

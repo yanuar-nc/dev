@@ -108,9 +108,33 @@
                 </div>
             </div>            
             <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo __( 'File sekarang' ); ?></label>
+                <div class="col-sm-10">
+                    <?php
+
+                    if( isset( $this->request->data[ $var_model ][ 'file' ] ) ):
+
+                    $rdata          = $this->request->data[ $var_model ];
+                    
+                    $picture_dir    = '/files/mail_inbox/file/' . $rdata[ 'id' ] . '/';
+                    $picture        = $picture_dir . '' . $rdata[ 'file' ];
+                    $thumb          = $picture_dir . 'thumb_' . $rdata[ 'file' ];
+                    
+                    ?>
+                    
+                    <a href="<?php echo Router::url( $picture ); ?>" data-rel="prettyPhoto">
+                        <?php echo $this->Html->image( $picture, array( 'class' => 'img-responsive img-thumbnail', 'alt' => '', 'width' => 100 ) ); ?>
+                    </a>
+                    <?php endif; ?>
+                    
+                </div>
+            </div>
+
+            <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo __( 'File' ); ?></label>
                 <div class="col-sm-10">
                     <?php echo $this->Form->input( 'file', array( 'type' => 'file' ) ); ?>
+                    <span class="help-block"><?php echo __( 'Leave it blank if no changes' ); ?></span>
                 </div>
             </div>  
         

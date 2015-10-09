@@ -13,12 +13,6 @@
         <div class="header-right">
             
             <div class="pull-right">
-                <?php
-                echo $this->Form->create( 'Search', array( 'url' => '/admin/search/index', 'type' => 'get', 'class' => 'form form-search', 'inputDefaults' => array( 'div' => false, 'label' => false ) ) );
-                echo $this->Form->input( 'keyword', array( 'class' => 'form-control', 'placeholder' => 'Search', 'type' => 'search' ) );
-
-                echo $this->Form->end();
-                ?>
                 <div class="btn-group btn-group-list">
                     <a href="<?= Router::url( array( 'controller' => 'mail_inboxes', 'action' => 'index' ) ) ?>" style="color: #FFF" class="btn btn-default">
                         <i class="fa fa-envelope-o"></i>
