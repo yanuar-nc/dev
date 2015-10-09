@@ -211,6 +211,16 @@
         {
             $this->assistant_read( $id );
         }
+
+        public function unit_approved( $id = null )
+        {
+            $this->assistant_approved( $id );
+        }
+
+        public function unit_not_approved( $id = null )
+        {
+            $this->assistant_not_approved( $id );
+        }
     }
 
 ?>

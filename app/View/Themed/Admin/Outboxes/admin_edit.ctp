@@ -62,7 +62,14 @@
                     <?php echo $this->Form->input( 'perihal', array( 'type' => 'text', 'required', 'class' => 'form-control', 'rows' => 3, 'placeholder' => __( 'Perihal' )  ) ); ?>
                 </div>
             </div>  
-            <?= $this->Form->select( 'Outbox.Leader', $leaders_all, array( 'multiple' => 'checkbox', 'class' => 'pler', 'label' => array( 'style' => 'margin-left: 10px' ), 'before' => '<span class="bangsar">' ) ); ?>            
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo __( 'Tujuan Surat' ) ?></label>
+                <div class="col-sm-10">
+                    <?= $this->Form->select( 'Outbox.Leader', $leaders_all, array( 'multiple' => 'checkbox', 'class' => 'pler', 'label' => array( 'style' => 'margin-left: 10px' ), 'before' => '<span class="bangsar">' ) ); ?>            
+                </div>
+            </div>
+
             <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo __( 'File' ); ?></label>
                 <div class="col-sm-10">
