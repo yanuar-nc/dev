@@ -73,14 +73,6 @@
         
             <table class="table table-bordered table-hover">
 
-                <thead>
-
-                    <tr>
-                        <th width="40%"><?php echo $this->Paginator->sort( $var_model . '.perihal', 'Perihal' ); ?></th>
-                    </tr>
-
-                </thead>
-
                 <tbody>
 
                     <?php
@@ -89,7 +81,7 @@
                             $row    = $data[ $var_model ];
                             $id     = $row[ 'id' ];
 
-                            $created   = date( 'D, d F Y H:i:s', strtotime( $row[ 'created' ] ) );
+                            $created   = date( 'D, d F Y', strtotime( $row[ 'created' ] ) );
                     ?>
 
                     <tr class="">
@@ -105,9 +97,13 @@
                                         )
                                     );
                                 ?>
-                                / 
-                                <small>
-                                    <?php
+                            </h4>
+                            <p>Lampiran: <br><small><?= $row[ 'lampiran' ] ?></small></p>
+                            <p> Tipe Surat : <small><?= $mail_types[ $row [ 'mail_type' ] ]; ?></small> </p>
+                            <small>
+                                <i class="fa fa-calendar"></i> &nbsp;Tanggal dibuat : <?= $created ?> &nbsp;
+                                <i class="fa fa-bullhorn"></i>  &nbsp;Status : 
+                                <?php
                                         foreach( $data[ 'OutboxLeader' ] as $outbox )
                                         {   
                                             if( $outbox[ 'leader_id' ] == $auth_data[ 'leader_id' ] )
@@ -116,12 +112,8 @@
                                                 echo text_approved( $status ) ;
                                             }
                                         }
-                                    ?>                                    
-                                </small>
-                            </h4>
-                            <p>Lampiran: <br><small><?= $row[ 'lampiran' ] ?></small></p>
-                            <p> Tipe Surat : <small><?= $mail_types[ $row [ 'mail_type' ] ]; ?></small> </p>
-                            <o><?php echo $created; ?></o>
+                                    ?>
+                            </small>
                         </td>
                     </tr>
 
