@@ -131,6 +131,7 @@ class AppController extends Controller
 
         if( isset( $this->request->params[ 'admin' ] ) )
         {
+            $this->_notificationDatas();
             $this->theme = 'Admin';
         } elseif( isset( $this->request->params[ 'leader' ] ) ){
             $this->theme = 'Leader';
@@ -181,11 +182,7 @@ class AppController extends Controller
         
         $statuses  = array( __( 'Enable' ), __( 'Disable' ) );
         $confirm_statuses = array( __( 'Yes' ), __( 'No' ) );
-        $types            = array( __( 'Article' ), __( 'Gallery' ) );
         $gender           = array( 'M' => __( 'Male' ), 'F' => __( 'Female' ) );
-        $payment_status = array( __( 'Paid' ), __( 'Un Paid' ) );
-        $delivered_status = array( __( 'Delivered' ), __( 'Undelivered') );
-        $pending_status   = array( __( 'Delivered' ), __( 'Pending Payment') );
         $confirmed_status   = array( __( 'Unconfirmed' ), __( 'Confirmed' ) );
 
         $this->set( compact( 
@@ -194,11 +191,7 @@ class AppController extends Controller
             'statuses', 
             'confirm_statuses', 
             'types', 
-            'gender', 
-            'payment_status', 
-            'delivered_status', 
-            'confirmed_status',
-            'pending_status'
+            'gender'
         ) );
         
         
@@ -244,5 +237,27 @@ class AppController extends Controller
             $this->field_title       = 'title_in_indonesian as title';
         } 
                
+    }
+
+    public function _notificationDatas( $leader_id = null )
+    {
+
+        $this->loadModel( 'Notification' );
+        
+        $conditions = array();
+        $options[ 'order' ] = 'Notification.id DESC';
+        
+        if ( $leader_id != null ) $conditions = array( 'Notification.leader_id' => $this->auth_leader_id );
+
+        $options[ 'conditions' ] = array_merge( $conditions, array( 'Notification.status' => 0 ) );
+        $notifications = $this->Notification->find( 'all', $options );
+
+        $text_notification = array(
+            'not_approved' => 'tidak menyetujui',
+            'approved' => 'menyetujui',
+            'outboxes' => 'surat keluar',
+            'MailInbox' => 'surat masuk/disposisi'
+        );
+        $this->set( compact( 'notifications', 'text_notification' ) );
     }
 }

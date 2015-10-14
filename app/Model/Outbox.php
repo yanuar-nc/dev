@@ -3,7 +3,15 @@
 class Outbox extends AppModel 
 {
 
-	public $hasMany   = array( 'OutboxLeader' );
+	public $hasMany   = array( 
+        'OutboxLeader', 
+        'Notification' => array( 
+            'foreignKey' => 'content_id', 
+            'conditions' => array(
+                'Notification.content' => 'outboxes'
+            )
+        ) 
+    );
 	public $actsAs    = array( 'Upload.Upload' => array( 'file' ) );
     public $hasAndBelongsToMany = array(
         'Leader' => array(
@@ -21,3 +29,4 @@ class Outbox extends AppModel
         return array( 1 => 'Segera', 2 => 'Penting', 3 => 'Biasa', 4 => 'Rahasisa', 5 => 'Pribadi' );
     }	
 }
+//538710684340

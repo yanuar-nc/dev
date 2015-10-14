@@ -21,6 +21,7 @@
 
             $this->loadModel( 'Leader' );
             $this->LoadModel( 'OutboxLeader' );
+            $this->loadModel( 'Notification' );
 
             $mail_types     = $this->Outbox->getMailTypes(); 
 
@@ -67,7 +68,7 @@
             $max++;
             $newid = 'OX-' . sprintf("%04s", $max);
             
-            $leaders = $this->Leader->find( 'list', array( 'conditions' => array( 'NOT' => array( 'type' => 1 ) ) ) );
+            $leaders = $this->Leader->find( 'list', array( 'conditions' => array( 'NOT' => array( 'type' => 1, 'id' => 1 ) ) ) );
             $this->request->data[ 'Outbox' ][ 'no_arsip' ] = $newid;
             $this->set( compact( 'leaders', 'newid' ) );            
         }
@@ -136,6 +137,29 @@
             $this->set( compact( 'datas' ) );             
         }
 
+        public function admin_read( $id = null )
+        {
+            
+            if( !$id )
+            {
+                throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
+            }
+            
+            $this->Outbox->id = $id;
+            if( !$this->Outbox->exists() )
+            {
+                throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
+            }
+            /*
+            if( $this->Outbox->updateAll( array( 'status' => 0 ), array( 'id' => $id ) ) )
+                 $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
+            else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
+            */
+            $this->set( 'data', $this->Outbox->read( null, $id ) );
+            //return $this->redirect( array( 'action' => ACTION_INDEX ) );
+
+        }
+
         public function assistant_read( $id = null )
         {
             
@@ -176,6 +200,7 @@
                  $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
             else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
 
+            $this->Notification->addNotif( $id, $this->model_name, 'approved', 'read', 1 );
             //$this->set( 'data', $this->MailInbox->read( null, $id ) );
             return $this->redirect( array( 'action' => ACTION_INDEX ) );
 

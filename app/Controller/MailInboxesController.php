@@ -127,12 +127,25 @@
             if( !$this->MailInbox->exists() )
             {
                 throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
-            }
+            }/*
             if( $this->MailInbox->updateAll( array( 'status' => 0 ), array( 'id' => $id ) ) )
                  $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
             else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
-
-            $this->set( 'data', $this->MailInbox->read( null, $id ) );
+*/
+            $options[ 'conditions' ] = array(
+                'MailInbox.id' => $id
+            );
+            $options[ 'contain' ] = array(
+                'LeaderMail',
+                'Assistant' => array(
+                    'conditions' => array( 'Assistant.type' => 2 )
+                ),
+                'Unit' => array(
+                    'conditions' => array( 'Unit.type' => 3 )
+                )
+            );
+            $data = $this->MailInbox->find( 'first', $options );
+            $this->set( 'data', $data );
             //return $this->redirect( array( 'action' => ACTION_INDEX ) );
             
         }

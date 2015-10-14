@@ -37,7 +37,7 @@
         <li <?php echo bootstrap_nav_active( $this->request->controller, 'mail_inboxes' ); ?>>
             <?php 
                 echo $this->Html->link(
-                    '<i class="fa fa-envelope-o"></i>&nbsp;<span>' . __( 'Inbox Mails' ) . '</span>',
+                    '<i class="fa fa-envelope-o"></i>&nbsp;<span>' . __( 'Surat Masuk' ) . '</span>',
                     array(
                         'controller' => 'mail_inboxes',
                         'action' => 'index',
