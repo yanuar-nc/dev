@@ -92,7 +92,7 @@
                                         $row[ 'perihal' ],
                                         array(
                                             'controller' => $var_controller,
-                                            'action' => ACTION_EDIT,
+                                            'action' => 'read',
                                             $id
                                         )
                                     );
