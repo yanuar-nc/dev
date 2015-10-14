@@ -26,13 +26,13 @@
         $diff->d -= $diff->w * 7;
 
         $string = array(
-            'y' => __( 'year' ),
-            'm' => __( 'month' ),
-            'w' => __( 'weeks' ),
-            'd' => __( 'days' ),
-            'h' => __( 'hour' ),
-            'i' => __( 'minute' ),
-            's' => __( 'second' ),
+            'y' => 'year',
+            'm' => 'month',
+            'w' => 'weeks',
+            'd' => 'days',
+            'h' => 'hour',
+            'i' => 'minute',
+            's' => 'second',
         );
         foreach ($string as $k => &$v) {
             if ($diff->$k) {
@@ -43,7 +43,7 @@
         }
 
         if (!$full) $string = array_slice($string, 0, 1);
-        return $string ? implode(', ', $string) . ' ' . __( 'ago' ) : __( 'just now' );
+        return $string ? implode(', ', $string) . ' ' . 'ago' : 'just now';
     }         
     /*
     public function string_limitWord( $string = '', $word_limit = 32 )
@@ -153,7 +153,8 @@
         }
         return $output;
     }
-        /**
+    
+    /**
      * Bootstrap functions
      */
 

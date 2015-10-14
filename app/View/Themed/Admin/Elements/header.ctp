@@ -26,27 +26,8 @@
                     <div class="dropdown-menu pull-right">
                         <a href="" class="link-right"><i class="fa fa-search"></i></a>
                         <h5>Notification</h5>
-                        <ul class="media-list dropdown-list" id="ListNotification" ajax-url="<?= Router::url( array( 'controller' => 'notifications', 'action' => 'lists' ), true); ?>">
-                            <?php
-                            foreach( $notifications as $data ):
-
-                                $row    = $data[ 'Notification' ];
-                                $leader = $data[ 'Leader' ];
-                                $from   = $leader[ 'name' ];
-                                $text   = $text_notification[ $row[ 'action' ] ] . " " . $text_notification[ $row[ 'content' ] ];
-                                $redirect = Router::url( array( 'controller' => $row[ 'content' ], 'action' => $row[ 'redirect' ], $row[ 'content_id' ] ), true );
-                            ?>  
-                            <a href="<?= $redirect ?>">
-                                <li class="media">
-                                    <div class="media-body">
-                                      <strong><?= $from ?></strong> <?= $text ?> anda.
-                                      <small class="date"><i class="fa fa-calendar"></i> <?= time_ago( $row[ 'created' ] ) ?></small>
-                                    </div>
-                                </li>
-                            </a>
-                            <?php
-                            endforeach;
-                            ?>
+                        <ul class="media-list dropdown-list" id="ListNotification69" ajax-url="<?= Router::url( array( 'controller' => 'notifications', 'action' => 'lists' ), true); ?>">
+                            
                         </ul>
                         <div class="dropdown-footer text-center">
                             <a href="" class="link">See All Notifications</a>
@@ -58,25 +39,6 @@
                         <i class="fa fa-send"></i>
                         <span class="badge" id="OutboxMessage" url="<?= Router::url( array( 'controller' => 'outbox_leaders', 'action' => 'checkOutboxMessage', $this->request->prefix => false ), true) ?>">0</span>
                     </a>
-                </div>
-
-                <div class="btn-group btn-group-list">
-                    <div class="dropdown-menu pull-right">
-                        <h5><?= __( 'Payment Confirmation' ) ?></h5>
-                        <ul class="media-list dropdown-list">
-                        </ul>
-                        <!--
-                        <div class="dropdown-footer text-center">
-                            <a href="" class="link">See All Messages</a>
-                        </div>
-                        -->
-                    </div><!-- dropdown-menu -->
-                    <a href="<?= $this->request->here ?>" style="color: #FFF" class="btn btn-default">
-                        <i class="glyphicon glyphicon-refresh"></i>
-                        <small><?= __( BTN_REFRESH ) ?></small>
-                    </a>
-
-
                 </div>
 
 

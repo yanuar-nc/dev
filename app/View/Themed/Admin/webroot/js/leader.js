@@ -1,28 +1,38 @@
-var url_list_notif = null;
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function( $ ) {
 
-   url_list_notif = $( "#ListNotification" ).attr( 'ajax-url' );
+   var list_notif     = $( "#ListNotification69" )
+   var url_list_notif = list_notif.attr( 'ajax-url' );
+   var last_id        = 0;
+
+   $.fn.ambilPesan = function() {
+
+      jQuery.ajax({
+            type: 'GET',
+            url: url_list_notif + '/' + last_id,
+            dataType: 'json',
+            success: function(datas) {
+               //penanganPesan(data);
+               //window.log( 's' );
+               jQuery.each( datas, function( index, data ){
+                  var notification = data.Notification;
+                  var redirect = notification.redirect;
+                  var from     = notification.from;
+                  var text     = notification.text;
+                  list_notif.prepend( '<a href="' + redirect + '"><li class="media"><div class="media-body"><strong>' + from + '</strong> ' + text + ' anda.<small class="date"><i class="fa fa-calendar"></i> ' + notification.time + '</small></div></li></a>' );
+                  last_id  = notification.id;
+               });
+               
+               
+            }  
+      }); 
+
+      window.setTimeout("$.fn.ambilPesan()", 5000);
+   }
+   $.fn.ambilPesan();
+
 });
 var param=""; // Berisi id terakhir milik pesan
-function ambilPesan() {
-
-   $.ajax({
-      url: 'http://localhost:90/itpm/admin/notifications/lists',   
-      type: "GET",  
-      dataType: "json",
-      success: function(data) {
-         //penanganPesan(data);
-         window.log( 's' );
-      }  
-   }); 
-/*   
-*/
-       
-   //alert( url_list_notif );
-   window.setTimeout("ambilPesan()", 5000);
-}
-ambilPesan();
 function penanganPesan(data) {
     
 /*   var indeks = data.indexOf("*id_akhir=");

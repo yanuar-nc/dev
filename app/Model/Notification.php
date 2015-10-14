@@ -47,7 +47,17 @@ App::uses('CakeSession', 'Model/Datasource');
                 return false;
             }
             
-        }        
+        }
+
+        public function getTextNotification()        
+        {
+            return array(
+                'not_approved' => 'tidak menyetujui',
+                'approved' => 'menyetujui',
+                'outboxes' => 'surat keluar',
+                'mail_inboxes' => 'surat masuk/disposisi'
+            );
+        }
 	}
 
 ?>
