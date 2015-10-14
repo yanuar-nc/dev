@@ -237,6 +237,8 @@
                  $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
             else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
 
+            $this->Notification->addNotif( $id, $this->model_name, 'approved', 'read', 1 );
+
             //$this->set( 'data', $this->MailInbox->read( null, $id ) );
             return $this->redirect( array( 'action' => ACTION_INDEX ) );
 
@@ -259,6 +261,7 @@
                  $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
             else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
 
+            $this->Notification->addNotif( $id, $this->model_name, 'not_approved', 'read', 0 );
             //$this->set( 'data', $this->MailInbox->read( null, $id ) );
             return $this->redirect( array( 'action' => ACTION_INDEX ) );
 
