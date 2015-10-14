@@ -48616,3 +48616,51 @@ Stack Trace:
 #3 D:\xampp\htdocs\itpm\lib\Cake\Routing\Dispatcher.php(160): Dispatcher->_invoke(Object(OutboxesController), Object(CakeRequest), Object(CakeResponse))
 #4 D:\xampp\htdocs\itpm\app\webroot\index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
 #5 {main}
+2015-10-14 20:52:46 Error: [MissingControllerException] Controller class ImagesController could not be found.
+Exception Attributes: array (
+  'class' => 'ImagesController',
+  'plugin' => NULL,
+)
+Request URL: /itpm/admin/images/photos/user2.png
+Stack Trace:
+#0 D:\xampp\htdocs\itpm\app\webroot\index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2015-10-14 20:52:46 Error: [MissingControllerException] Controller class ImagesController could not be found.
+Exception Attributes: array (
+  'class' => 'ImagesController',
+  'plugin' => NULL,
+)
+Request URL: /itpm/admin/images/photos/user3.png
+Stack Trace:
+#0 D:\xampp\htdocs\itpm\app\webroot\index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2015-10-14 20:52:46 Error: [MissingControllerException] Controller class ImagesController could not be found.
+Exception Attributes: array (
+  'class' => 'ImagesController',
+  'plugin' => NULL,
+)
+Request URL: /itpm/admin/images/photos/user1.png
+Stack Trace:
+#0 D:\xampp\htdocs\itpm\app\webroot\index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2015-10-14 20:52:46 Error: [MissingControllerException] Controller class ImagesController could not be found.
+Exception Attributes: array (
+  'class' => 'ImagesController',
+  'plugin' => NULL,
+)
+Request URL: /itpm/admin/images/photos/user4.png
+Stack Trace:
+#0 D:\xampp\htdocs\itpm\app\webroot\index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2015-10-14 21:16:57 Error: [MissingViewException] View file "D:\xampp\htdocs\itpm\app\View\Themed\Admin\Notifications\admin_lists.ctp" is missing.
+Exception Attributes: array (
+  'file' => 'D:\\xampp\\htdocs\\itpm\\app\\View\\Themed\\Admin\\Notifications\\admin_lists.ctp',
+)
+Request URL: /itpm/admin/notifications/lists
+Stack Trace:
+#0 D:\xampp\htdocs\itpm\lib\Cake\View\View.php(457): View->_getViewFileName(NULL)
+#1 D:\xampp\htdocs\itpm\lib\Cake\Controller\Controller.php(952): View->render(NULL, NULL)
+#2 D:\xampp\htdocs\itpm\lib\Cake\Routing\Dispatcher.php(192): Controller->render()
+#3 D:\xampp\htdocs\itpm\lib\Cake\Routing\Dispatcher.php(160): Dispatcher->_invoke(Object(NotificationsController), Object(CakeRequest), Object(CakeResponse))
+#4 D:\xampp\htdocs\itpm\app\webroot\index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#5 {main}
