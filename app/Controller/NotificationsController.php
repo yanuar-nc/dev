@@ -3,10 +3,10 @@
     class NotificationsController extends AppController
     {
         
-        public $model_name      = 'Home';
-        public $module_title    = 'Home';
+        public $model_name      = 'Notification';
+        public $module_title    = 'Notification';
         public $module_desc     = ''; 
-        public $module_icon     = 'fa fa-home';       
+        public $module_icon     = 'fa fa-bell-o';       
         public function beforeFilter()
         {
             /*
@@ -18,8 +18,9 @@
             $module_desc    = $this->module_title;
             $module_icon    = $this->module_icon;
             $title_for_layout = $module_title;
-            $this->set( compact( 'var_model', 'module_title', 'module_desc', 'title_for_layout', 'module_icon' ) );            
+
             $text_notification = $this->Notification->getTextNotification();
+            $this->set( compact( 'var_model', 'module_title', 'module_desc', 'title_for_layout', 'module_icon', 'text_notification' ) );            
 
             $this->Auth->allow( 'checkInboxMessage');
         }
@@ -56,6 +57,16 @@
             else:
                 $this->response->body( json_encode( array() ) );
             endif;
+        }
+
+        public function admin_index()
+        {
+            $options[ 'order' ]      = array( 'Notification.id' => 'DESC' );
+            $this->Paginator->settings = $options;
+            $datas = $this->Paginator->paginate( $this->model_name );
+
+            //$datas = $this->MailInbox->find( 'all', $options );
+            $this->set( compact( 'datas' ) );              
         }
 
     }

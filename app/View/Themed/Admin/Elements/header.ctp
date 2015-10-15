@@ -21,25 +21,24 @@
                 <div class="btn-group btn-group-list btn-group-notification">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                       <i class="fa fa-bell-o"></i>
-                      <span class="badge">5</span>
+                      <span class="badge" id="NotificationCount"></span>
                     </button>
                     <div class="dropdown-menu pull-right">
-                        <a href="" class="link-right"><i class="fa fa-search"></i></a>
                         <h5>Notification</h5>
                         <ul class="media-list dropdown-list" id="ListNotification69" ajax-url="<?= Router::url( array( 'controller' => 'notifications', 'action' => 'lists' ), true); ?>">
                             
                         </ul>
                         <div class="dropdown-footer text-center">
-                            <a href="" class="link">See All Notifications</a>
+                            <?= $this->Html->link( 'Lihat semua pemberitahuan', array( 'controller' => 'notifications', 'action' => 'index' ), array( 'class' => 'link' ) ); ?>
                         </div>
                     </div><!-- dropdown-menu -->
                 </div>
-                <div class="btn-group btn-group-list">
+                <!-- <div class="btn-group btn-group-list">
                     <a href="<?= Router::url( array( 'controller' => 'outboxes', 'action' => 'index' ) ) ?>" style="color: #FFF" class="btn btn-default">
                         <i class="fa fa-send"></i>
                         <span class="badge" id="OutboxMessage" url="<?= Router::url( array( 'controller' => 'outbox_leaders', 'action' => 'checkOutboxMessage', $this->request->prefix => false ), true) ?>">0</span>
                     </a>
-                </div>
+                </div> -->
 
 
                         

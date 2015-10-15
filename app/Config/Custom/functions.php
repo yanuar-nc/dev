@@ -26,13 +26,13 @@
         $diff->d -= $diff->w * 7;
 
         $string = array(
-            'y' => 'year',
-            'm' => 'month',
-            'w' => 'weeks',
-            'd' => 'days',
-            'h' => 'hour',
-            'i' => 'minute',
-            's' => 'second',
+            'y' => 'tahun',
+            'm' => 'bulan',
+            'w' => 'minggu',
+            'd' => 'hari',
+            'h' => 'jam',
+            'i' => 'menit',
+            's' => 'detik',
         );
         foreach ($string as $k => &$v) {
             if ($diff->$k) {
@@ -43,7 +43,7 @@
         }
 
         if (!$full) $string = array_slice($string, 0, 1);
-        return $string ? implode(', ', $string) . ' ' . 'ago' : 'just now';
+        return $string ? implode(', ', $string) . ' ' . 'yang lalu' : 'baru saja';
     }         
     /*
     public function string_limitWord( $string = '', $word_limit = 32 )

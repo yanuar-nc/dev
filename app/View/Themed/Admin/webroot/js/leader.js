@@ -4,7 +4,7 @@ jQuery(document).ready(function( $ ) {
    var list_notif     = $( "#ListNotification69" )
    var url_list_notif = list_notif.attr( 'ajax-url' );
    var last_id        = 0;
-
+   var notification_count = 0;
    $.fn.ambilPesan = function() {
 
       jQuery.ajax({
@@ -21,11 +21,15 @@ jQuery(document).ready(function( $ ) {
                   var text     = notification.text;
                   list_notif.prepend( '<a href="' + redirect + '"><li class="media"><div class="media-body"><strong>' + from + '</strong> ' + text + ' anda.<small class="date"><i class="fa fa-calendar"></i> ' + notification.time + '</small></div></li></a>' );
                   last_id  = notification.id;
+                  notification_count++;
                });
                
                
             }  
       }); 
+      if ( notification_count > 0 )
+         $( "#NotificationCount" ).text( notification_count );
+      else $( "#NotificationCount" ).text();
 
       window.setTimeout("$.fn.ambilPesan()", 5000);
    }

@@ -152,9 +152,8 @@
             }
             /*
             */
-            if( $this->Notification->updateAll( array( 'status' => 1 ), array( 'Notification.content_id' => $id, 'Notification.content' => 'outboxes' ) ) )
-                 $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
-            else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
+            if( !$this->Notification->updateAll( array( 'status' => 1 ), array( 'Notification.content_id' => $id, 'Notification.content' => 'outboxes' ) ) ) 
+                $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ), 'Bootstrap/flash-error' );
             $this->set( 'data', $this->Outbox->read( null, $id ) );
             //return $this->redirect( array( 'action' => ACTION_INDEX ) );
 

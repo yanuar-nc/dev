@@ -23,7 +23,7 @@
             $this->loadModel( 'Leader' );
             $this->loadModel( 'LeaderMail' );
             $this->loadModel( 'Notification' );
-            
+
             $this->set( compact( 'var_model', 'module_title', 'module_desc', 'module_icon', 'readed_status', 'mail_types' ) );
             
             $leader_assistants = $this->Leader->find( 'list', array( 
@@ -128,11 +128,11 @@
             if( !$this->MailInbox->exists() )
             {
                 throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
-            }/*
-            if( $this->MailInbox->updateAll( array( 'status' => 0 ), array( 'id' => $id ) ) )
-                 $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
-            else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
-*/
+            }
+
+            if( !$this->Notification->updateAll( array( 'status' => 1 ), array( 'Notification.content_id' => $id, 'Notification.content' => 'mail_inboxes' ) ) )
+                 $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ), 'Bootstrap/flash-error' );
+
             $options[ 'conditions' ] = array(
                 'MailInbox.id' => $id
             );

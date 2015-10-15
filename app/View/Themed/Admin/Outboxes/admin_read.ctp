@@ -55,6 +55,15 @@ $picture        = $picture_dir . '' . $datas[ 'file' ];
         </div>
         <div class="row">
             <div class="col-sm-12 mb30">
+                <p>Status leader: </p>
+                <?php
+                foreach( $data[ 'Leader' ] as $assistant ):
+                    $status = text_approved( $assistant[ 'OutboxLeader' ][ 'status' ] );
+                    echo $assistant[ 'name' ] . " ( " . $status . " ), &nbsp ";
+                endforeach;
+                ?>                
+            </div>
+            <div class="col-sm-12 mb30">
             	<p>Pesan: </p>
             	<i><?= $datas[ 'pesan' ] == null ? 'Tidak ada pesan' : $datas[ 'pesan' ] ?></i>
             </div>
