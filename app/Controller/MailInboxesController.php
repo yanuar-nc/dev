@@ -22,7 +22,8 @@
             $mail_types     = $this->MailInbox->getMailTypes();
             $this->loadModel( 'Leader' );
             $this->loadModel( 'LeaderMail' );
-
+            $this->loadModel( 'Notification' );
+            
             $this->set( compact( 'var_model', 'module_title', 'module_desc', 'module_icon', 'readed_status', 'mail_types' ) );
             
             $leader_assistants = $this->Leader->find( 'list', array( 
@@ -237,7 +238,7 @@
                  $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
             else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
 
-            $this->Notification->addNotif( $id, $this->model_name, 'approved', 'read', 1 );
+            $this->Notification->addNotif( $id, 'mail_inboxes', 'approved', 'read', 1 );
 
             //$this->set( 'data', $this->MailInbox->read( null, $id ) );
             return $this->redirect( array( 'action' => ACTION_INDEX ) );
@@ -261,7 +262,7 @@
                  $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
             else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
 
-            $this->Notification->addNotif( $id, $this->model_name, 'not_approved', 'read', 0 );
+            $this->Notification->addNotif( $id, 'mail_inboxes', 'not_approved', 'read', 0 );
             //$this->set( 'data', $this->MailInbox->read( null, $id ) );
             return $this->redirect( array( 'action' => ACTION_INDEX ) );
 
