@@ -48,7 +48,7 @@
                 if( $this->MailInbox->save( $this->request->data ) )
                 {
                     $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
-                    $this->Notification->addNotif( $this->MailInbox->getInsertID(), 'mail_inboxes', 'add', 'edit', 1, 'leader' );
+                    $this->Notification->addNotif( $this->MailInbox->getInsertID(), 'mail_inboxes', 'add', 'edit', 2, 'leader' );
                     return $this->redirect( array( 'action' => ACTION_INDEX ) );
                 }
                 else
@@ -312,7 +312,7 @@
                 throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
             }
 
-            if( !$this->Notification->updateAll( array( 'status' => 1 ), array( 'Notification.content_id' => $id, 'Notification.content' => 'mail_inboxes', 'Notification.role' => $this->auth_role ) ) )
+            if( !$this->Notification->updateAll( array( 'status' => 1 ), array( 'Notification.content_id' => $id, 'Notification.content' => 'mail_inboxes', 'Notification.role LIKE' => '%'. $this->auth_role .'%' ) ) )
                  $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ), 'Bootstrap/flash-error' );
             
             if( $this->request->is( 'post' ) || $this->request->is( 'put' ) )
@@ -348,7 +348,13 @@
                 if( $this->MailInbox->saveAssociated( $this->request->data, array( 'deep' => true ) ) )
                 {
                     $this->Session->setFlash( __( MSG_DATA_EDIT_SUCCESS ), 'Bootstrap/flash-success' );
-                    return $this->redirect( array( 'action' => ACTION_INDEX ) );
+                    if( isset( $this->request->data[ $this->model_name ][ 'Assistant' ] ) )
+                    {
+                        foreach( $this->request->data[ $this->model_name ][ 'Assistant' ] as $key ):
+                            $this->Notification->addNotif( $this->request->data[ $this->model_name ][ 'id' ], 'mail_inboxes', 'add', 'read', 2, 'assistant' );
+                        endforeach;                        
+                    }
+                    //return $this->redirect( array( 'action' => ACTION_INDEX ) );
                 }
             }
             else
@@ -439,6 +445,9 @@
             {
                 throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
             }
+
+            if( !$this->Notification->updateAll( array( 'status' => 1 ), array( 'Notification.content_id' => $id, 'Notification.content' => 'mail_inboxes', 'Notification.role LIKE' =>  '%'. $this->auth_role .'%' ) ) )
+                 $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ), 'Bootstrap/flash-error' );
             
             if( $this->request->is( 'post' ) || $this->request->is( 'put' ) )
             {
@@ -534,6 +543,9 @@
             {
                 throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
             }
+
+            if( !$this->Notification->updateAll( array( 'status' => 1 ), array( 'Notification.content_id' => $id, 'Notification.content' => 'mail_inboxes', 'Notification.role LIKE' => '%'. $this->auth_role .'%' ) ) )
+                 $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ), 'Bootstrap/flash-error' );
         
             $this->request->data = $this->MailInbox->read( null, $id );
             $options[ 'joins' ] = array(
