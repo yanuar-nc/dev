@@ -24,12 +24,19 @@ jQuery(document).ready(function( $ ) {
                   notification_count++;
                });
                
+               if ( notification_count > 0 ) $( "#NotificationCount" ).text( notification_count );
+               else $( "#NotificationCount" ).text();
+
+               if ( datas.length > 0 )
+               {
+               var audioElement = $( "#soundNotification" );
+               audioElement.html( '<audio controls autoplay style="display: block"><source src="' + audioElement.attr( 'sound-path' ) + '" type="audio/mpeg"></audio> ');
+                  
+               }
                
             }  
       }); 
-      if ( notification_count > 0 )
-         $( "#NotificationCount" ).text( notification_count );
-      else $( "#NotificationCount" ).text();
+
 
       window.setTimeout("$.fn.ambilPesan()", 5000);
    }

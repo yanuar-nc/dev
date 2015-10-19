@@ -48,6 +48,7 @@
                 if( $this->MailInbox->save( $this->request->data ) )
                 {
                     $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
+                    $this->Notification->addNotif( $this->MailInbox->getInsertID(), 'mail_inboxes', 'add', 'edit', 1, 'leader' );
                     return $this->redirect( array( 'action' => ACTION_INDEX ) );
                 }
                 else
@@ -130,7 +131,7 @@
                 throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
             }
 
-            if( !$this->Notification->updateAll( array( 'status' => 1 ), array( 'Notification.content_id' => $id, 'Notification.content' => 'mail_inboxes' ) ) )
+            if( !$this->Notification->updateAll( array( 'status' => 1 ), array( 'Notification.content_id' => $id, 'Notification.content' => 'mail_inboxes', 'Notification.role' => 'admin' ) ) )
                  $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ), 'Bootstrap/flash-error' );
 
             $options[ 'conditions' ] = array(
@@ -310,6 +311,9 @@
             {
                 throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
             }
+
+            if( !$this->Notification->updateAll( array( 'status' => 1 ), array( 'Notification.content_id' => $id, 'Notification.content' => 'mail_inboxes', 'Notification.role' => $this->auth_role ) ) )
+                 $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ), 'Bootstrap/flash-error' );
             
             if( $this->request->is( 'post' ) || $this->request->is( 'put' ) )
             {
