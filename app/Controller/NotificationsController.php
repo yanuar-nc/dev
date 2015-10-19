@@ -29,10 +29,10 @@
         {
 
             $this->autoRender = false;
-            $options[ 'conditions' ] = array( 'Notification.status' => 0 );
+            $options[ 'conditions' ] = array( 'Notification.status' => 0, 'Notification.role' => 'admin' );
             if ( $id > 0 )
             {
-                $options[ 'conditions' ] = array( 'Notification.status' => 0, 'Notification.id > ' . $id );
+                $options[ 'conditions' ] = array( 'Notification.status' => 0, 'Notification.role' => 'admin', 'Notification.id > ' . $id );
             }
 
             $datas = $this->Notification->find( 'all', $options );
@@ -59,6 +59,7 @@
             endif;
         }
 
+
         public function admin_index()
         {
             $options[ 'order' ]      = array( 'Notification.id' => 'DESC' );
@@ -69,6 +70,39 @@
             $this->set( compact( 'datas' ) );              
         }
 
+        public function leader_lists( $id = null )
+        {
+
+            $this->autoRender = false;
+            $options[ 'conditions' ] = array( 'Notification.status' => 0, 'Notification.role' => 'leader' );
+            if ( $id > 0 )
+            {
+                $options[ 'conditions' ] = array( 'Notification.status' => 0, 'Notification.role' => 'leader', 'Notification.id > ' . $id );
+            }
+
+            $datas = $this->Notification->find( 'all', $options );
+            $text_notification = $this->Notification->getTextNotification();
+            if ( count( $datas ) > 0 ):
+                foreach ( $datas as $key => $data ) {
+
+                    $row    = $data[ 'Notification' ];
+                    $leader = $data[ 'Leader' ];
+
+                    $from   = $leader[ 'name' ];
+                    $time   = time_ago( $row[ 'created' ] );
+                    $text   = $text_notification[ $row[ 'action' ] ] . " " . $text_notification[ $row[ 'content' ] ];
+                    $redirect = Router::url( array( 'controller' => $row[ 'content' ], 'action' => $row[ 'redirect' ], $row[ 'content_id' ] ), true );
+
+                    $merge  = array( 'from' => $from, 'text' => $text, 'redirect' => $redirect, 'time' => $time );
+                    $datas[ $key ][ 'Notification' ] = array_merge( $row, $merge );
+                }
+                $this->response->type('json');
+                $json  = json_encode( $datas );
+                $this->response->body($json);
+            else:
+                $this->response->body( json_encode( array() ) );
+            endif;
+        }
     }
 
 ?>

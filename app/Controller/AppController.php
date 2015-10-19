@@ -256,7 +256,8 @@ class AppController extends Controller
             'not_approved' => 'tidak menyetujui',
             'approved' => 'menyetujui',
             'outboxes' => 'surat keluar',
-            'MailInbox' => 'surat masuk/disposisi'
+            'MailInbox' => 'surat masuk/disposisi',
+            'add' => 'mendapatkan'
         );
         $this->set( compact( 'notifications', 'text_notification' ) );
     }

@@ -11,7 +11,7 @@ App::uses('CakeSession', 'Model/Datasource');
         public $belongsTo = array( 'Leader' );
         public $actsAs = array( 'Containable' ) ;
 
-        public function addNotif( $content_id = null, $content = null, $action = null, $redirect = null, $mail_status = null )
+        public function addNotif( $content_id = null, $content = null, $action = null, $redirect = null, $mail_status = null, $role = "admin" )
         {
             /*
             if( !$id )
@@ -34,6 +34,7 @@ App::uses('CakeSession', 'Model/Datasource');
             $data[ 'action' ]     = $action;
             $data[ 'redirect' ]   = $redirect;
             $data[ 'mail_status' ] = $mail_status;
+            $data[ 'role' ]        = $role;
             $data[ 'status' ]     = 0;
             $data[ 'created' ]    = date( 'Y-m-d H:i:s' );
 
@@ -55,7 +56,8 @@ App::uses('CakeSession', 'Model/Datasource');
                 'not_approved' => 'tidak menyetujui',
                 'approved' => 'menyetujui',
                 'outboxes' => 'surat keluar',
-                'mail_inboxes' => 'surat masuk/disposisi'
+                'mail_inboxes' => 'surat masuk/disposisi',
+                'add' => 'mingirimkan'
             );
         }
 	}

@@ -16,33 +16,27 @@ $tanggal_penyelesaian = date( 'd M Y', strtotime( $data[ 'limit_date' ] ) );
     </div>
     <div class="col-md-3 col-md-offset-6">
         <?php
-        foreach( $datas[ 'LeaderMail' ] as $leader_mail )
-        {
-            if( $leader_mail[ 'leader_id' ] == $auth_data[ 'leader_id' ] )
-            {
-                if( $leader_mail[ 'status' ] == 0 )
-                    echo $this->Html->link(
-                            __( TEXT_APPROVED ),
-                            array(
-                                'controller' => $var_controller,
-                                'action' => 'approved',
-                                $data[ 'id' ]
-                            ),
-                            array( 'class' => 'btn btn-white pull-right')
-                        );   
-                else
-                    echo $this->Html->link(
-                            __( TEXT_NOT_APPROVED ),
-                            array(
-                                'controller' => $var_controller,
-                                'action' => 'not_approved',
-                                $data[ 'id' ]
-                            ),
-                            array( 'class' => 'btn btn-white pull-right')
-                        );   
+            if( $data[ 'leader_status' ] == 0 )
+                echo $this->Html->link(
+                        __( TEXT_APPROVED ),
+                        array(
+                            'controller' => $var_controller,
+                            'action' => 'approved',
+                            $data[ 'id' ]
+                        ),
+                        array( 'class' => 'btn btn-white pull-right')
+                    );   
+            else
+                echo $this->Html->link(
+                        __( TEXT_NOT_APPROVED ),
+                        array(
+                            'controller' => $var_controller,
+                            'action' => 'not_approved',
+                            $data[ 'id' ]
+                        ),
+                        array( 'class' => 'btn btn-white pull-right')
+                    );   
 
-            }
-        }
         ?>
     </div>
 </div>
