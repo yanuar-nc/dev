@@ -16,11 +16,9 @@ $tanggal_penyelesaian = date( 'd M Y', strtotime( $data[ 'limit_date' ] ) );
     </div>
     <div class="col-md-3 col-md-offset-6">
         <?php
-        foreach( $datas[ 'LeaderMail' ] as $leader_mail )
-        {
-            if( $leader_mail[ 'leader_id' ] == $auth_data[ 'leader_id' ] )
+            if( $data[ 'leader_id' ] == $auth_data[ 'leader_id' ] )
             {
-                if( $leader_mail[ 'status' ] == 0 )
+                if( $data[ 'leader_status' ] == 0 )
                     echo $this->Html->link(
                             __( TEXT_APPROVED ),
                             array(
@@ -42,7 +40,6 @@ $tanggal_penyelesaian = date( 'd M Y', strtotime( $data[ 'limit_date' ] ) );
                         );   
 
             }
-        }
         ?>
     </div>
 </div>
