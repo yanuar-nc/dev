@@ -80,7 +80,7 @@ jQuery(document).ready(function() {
 		      	if ( datas.length > 0 )
 		      	{
 					var audioElement = $( "#soundNotification" );
-					audioElement.html( '<audio controls autoplay style="display: none"><source src="' + audioElement.attr( 'sound-path' ) + '" type="audio/mpeg"></audio> ');
+					audioElement.html( '<audio controls autoplay style="display: block"><source src="' + audioElement.attr( 'sound-path' ) + '" type="audio/mpeg"></audio> ');
 		      		
 		      	}
 

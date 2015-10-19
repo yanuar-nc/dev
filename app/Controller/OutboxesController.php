@@ -53,6 +53,12 @@
                 if( $this->Outbox->saveAssociated( $this->request->data, array( 'deep' => true ) ) )
                 {
                     $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
+                    if( isset( $this->request->data[ $this->model_name ][ 'Leader' ] ) )
+                    {
+                        foreach( $this->request->data[ $this->model_name ][ 'Leader' ] as $key ):
+                            $this->Notification->addNotif( $this->Outbox->getInsertID(), 'outboxes', 'add', 'read', 3, 'assistant/unit' );
+                        endforeach;                        
+                    }                    
                     return $this->redirect( array( 'action' => ACTION_INDEX ) );
                 }
                 else
@@ -152,7 +158,7 @@
             }
             /*
             */
-            if( !$this->Notification->updateAll( array( 'status' => 1 ), array( 'Notification.content_id' => $id, 'Notification.content' => 'outboxes' ) ) ) 
+            if( !$this->Notification->updateAll( array( 'status' => 1 ), array( 'Notification.content_id' => $id, 'Notification.content' => 'outboxes', 'Notification.role' => 'admin' ) ) ) 
                 $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ), 'Bootstrap/flash-error' );
             $this->set( 'data', $this->Outbox->read( null, $id ) );
             //return $this->redirect( array( 'action' => ACTION_INDEX ) );
@@ -172,11 +178,10 @@
             {
                 throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
             }
-            /*
-            if( $this->Outbox->updateAll( array( 'status' => 0 ), array( 'id' => $id ) ) )
-                 $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
-            else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
-            */
+
+            if( !$this->Notification->updateAll( array( 'status' => 1 ), array( 'Notification.content_id' => $id, 'Notification.content' => 'outboxes', 'Notification.role LIKE' => '%'. $this->auth_role .'%' ) ) )
+                 $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ), 'Bootstrap/flash-error' );
+
             $this->set( 'data', $this->Outbox->read( null, $id ) );
             //return $this->redirect( array( 'action' => ACTION_INDEX ) );
 

@@ -38,7 +38,12 @@
         echo $this->fetch( 'script' );
         echo $this->Html->script( 'custom' );
 
-        ?>        
+        ?>   
+        <style type="text/css">
+        audio{
+            display: none;
+        }
+        </style>     
     </head>
 
     <body>
