@@ -375,7 +375,7 @@
             if( $this->MailInbox->updateAll( array( 'MailInbox.leader_status' => 1 ), array( 'MailInbox.id' => $id ) ) )
                  $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
             else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
-
+            $this->Notification->addNotif( $id, 'mail_inboxes', 'approved', 'read', 1 );
             //$this->set( 'data', $this->MailInbox->read( null, $id ) );
             return $this->redirect( array( 'action' => ACTION_INDEX ) );
         }
@@ -396,6 +396,7 @@
                  $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
             else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
 
+            $this->Notification->addNotif( $id, 'mail_inboxes', 'not_approved', 'read', 1 );
             //$this->set( 'data', $this->MailInbox->read( null, $id ) );
             return $this->redirect( array( 'action' => ACTION_INDEX ) );
 
