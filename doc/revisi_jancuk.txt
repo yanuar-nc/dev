@@ -1,0 +1,5 @@
+1. surat keluar perlu di paraf terlebih dahulu oleh pembantu ketua
+2. ketua perlu tahu bahwa ada surat keluar yang di ttd oleh pembantu ketua
+3. surat keluar ketua dan pembantu ketua
+4. pergantian no surat menjadi otomatis sesuai dengan kategori surat
+5. surat keluar menjadi pdf atau word
