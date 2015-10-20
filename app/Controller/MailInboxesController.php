@@ -494,6 +494,12 @@
                 if( $this->MailInbox->saveAssociated( $this->request->data, array( 'deep' => true )  ) )
                 {
                     $this->Session->setFlash( __( MSG_DATA_EDIT_SUCCESS ), 'Bootstrap/flash-success' );
+                    if( isset( $this->request->data[ $this->model_name ][ 'Unit' ] ) )
+                    {
+                        foreach( $this->request->data[ $this->model_name ][ 'Unit' ] as $key ):
+                            $this->Notification->addNotif( $this->request->data[ $this->model_name ][ 'id' ], 'mail_inboxes', 'add', 'read', 2, 'unit' );
+                        endforeach;                        
+                    }                    
                     return $this->redirect( array( 'action' => ACTION_INDEX ) );
                 }
             }

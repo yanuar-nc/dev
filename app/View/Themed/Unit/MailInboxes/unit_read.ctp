@@ -108,7 +108,6 @@ $picture        = $picture_dir . '' . $data[ 'file' ];
             <div class="col-sm-12">
                 <div class="text-right btn-invoice">
                     <button class="btn btn-white btn-lg"><i class="fa fa-arrow-left mr5"></i> Kembali</button>
-                    <button class="btn btn-primary btn-lg mr5"><i class="fa fa-send mr5"></i> Kirim Disposisi</button>
                 </div>
             </div>
         </div>
