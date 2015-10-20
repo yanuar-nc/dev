@@ -16,32 +16,7 @@ $tanggal_penyelesaian = date( 'd M Y', strtotime( $data[ 'limit_date' ] ) );
     </div>
     <div class="col-md-3 col-md-offset-6">
         <?php
-<<<<<<< HEAD
-            if( $data[ 'leader_id' ] == $auth_data[ 'leader_id' ] )
-            {
-                if( $data[ 'leader_status' ] == 0 )
-                    echo $this->Html->link(
-                            __( TEXT_APPROVED ),
-                            array(
-                                'controller' => $var_controller,
-                                'action' => 'approved',
-                                $data[ 'id' ]
-                            ),
-                            array( 'class' => 'btn btn-white pull-right')
-                        );   
-                else
-                    echo $this->Html->link(
-                            __( TEXT_NOT_APPROVED ),
-                            array(
-                                'controller' => $var_controller,
-                                'action' => 'not_approved',
-                                $data[ 'id' ]
-                            ),
-                            array( 'class' => 'btn btn-white pull-right')
-                        );   
 
-            }
-=======
             if( $data[ 'leader_status' ] == 0 )
                 echo $this->Html->link(
                         __( TEXT_APPROVED ),
@@ -63,7 +38,6 @@ $tanggal_penyelesaian = date( 'd M Y', strtotime( $data[ 'limit_date' ] ) );
                         array( 'class' => 'btn btn-white pull-right')
                     );   
 
->>>>>>> 5a1356925ee881978572a614e70cba1a14709bbd
         ?>
     </div>
 </div>
