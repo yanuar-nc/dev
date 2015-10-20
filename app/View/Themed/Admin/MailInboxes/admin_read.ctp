@@ -15,7 +15,7 @@ $picture        = $picture_dir . '' . $data[ 'file' ];
     </div>
     <div class="col-md-3 col-md-offset-6">
         <?php
-            echo $this->Html->link(
+            /*echo $this->Html->link(
                     __( TEXT_EDIT ),
                     array(
                         'controller' => $var_controller,
@@ -23,7 +23,7 @@ $picture        = $picture_dir . '' . $data[ 'file' ];
                         $data[ 'id' ]
                     ),
                     array( 'class' => 'btn btn-white pull-right')
-                );  
+                );  */
         ?>
     </div>
 </div>

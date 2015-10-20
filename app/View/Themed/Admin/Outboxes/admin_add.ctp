@@ -35,11 +35,25 @@
         <br />
                 
             <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo __( 'No. Arsip' ); ?></label>
+                <label class="col-sm-2 control-label"><?php echo __( 'No. Surat' ); ?></label>
                 <div class="col-sm-10">
-                    <?php echo $this->Form->input( 'no_arsip', array( 'type' => 'text', 'required', 'class' => 'form-control', 'placeholder' => __( 'No. Arsip' )  ) ); ?>
+                    <?php echo $this->Form->input( 'no_surat', array( 'type' => 'text', 'required', 'class' => 'form-control', 'placeholder' => __( 'No. Surat' ), 'readonly'  ) ); ?>
                 </div>
             </div>  
+                
+            <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo __( 'No. Arsip' ); ?></label>
+                <div class="col-sm-10">
+                    <?php echo $this->Form->input( 'no_arsip', array( 'type' => 'text', 'required', 'class' => 'form-control', 'placeholder' => __( 'No. Arsip' ), 'readonly'  ) ); ?>
+                </div>
+            </div>  
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo __( 'Tujuan' ); ?></label>
+                <div class="col-sm-10">
+                    <?php echo $this->Form->input( 'purpose', array( 'required', 'class' => 'form-control', 'empty' => '-- Pilih tujuan --', 'options' => $getPurposes  ) ); ?>
+                </div>
+            </div>
 
             <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo __( 'Type' ); ?></label>
@@ -47,6 +61,7 @@
                     <?php echo $this->Form->input( 'mail_type', array( 'required', 'class' => 'form-control', 'empty' => '-- Sifat --', 'placeholder' => __( 'Category' ), 'options' => $mail_types  ) ); ?>
                 </div>
             </div>
+
             <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo __( 'Lampiran' ); ?></label>
                 <div class="col-sm-10">
@@ -60,7 +75,7 @@
                 </div>
             </div>  
             <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo __( 'Tujuan Surat' ); ?></label>
+                <label class="col-sm-2 control-label"><?php echo __( 'Kepada' ); ?></label>
                 <div class="col-sm-10">
                     <?php echo $this->Form->input( 'Outbox.Leader', array( 'options' => $leaders, 'multiple' => 'checkbox', 'class' => 'checkbox block' ) ); ?>
                 </div>

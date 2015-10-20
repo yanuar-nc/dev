@@ -24,12 +24,15 @@
             $this->loadModel( 'Notification' );
 
             $mail_types     = $this->Outbox->getMailTypes(); 
+            $getPurposes    = $this->Outbox->getPurposes();
 
             $leaders_all = $this->Leader->find( 'list', array( 
-                'fields' => array( 'Leader.id', 'Leader.name' ) 
+                'fields' => array( 'Leader.id', 'Leader.name' ),
+                /*'conditions' => array( 'Leader.type' => 2 )*/
             ) );
 
-            $this->set( compact( 'var_model', 'module_title', 'module_desc', 'title_for_layout', 'leaders_all', 'module_icon', 'mail_types' ) );            
+
+            $this->set( compact( 'var_model', 'module_title', 'module_desc', 'title_for_layout', 'leaders_all', 'module_icon', 'mail_types', 'getPurposes' ) );            
 
         }
 
@@ -67,16 +70,20 @@
                 }
             }
             $created = date( 'Y-m-d h:i:s' );
-            $data  = $this->Outbox->find( 'first', array( 'fields' => array( 'no_arsip' ), 'order' => 'Outbox.id DESC' ) );
-            $value = isset( $data[ 'Outbox' ][ 'no_arsip'] ) ? $data[ 'Outbox' ][ 'no_arsip'] : 0;
+            
+            $data  = $this->Outbox->find( 'first', array( 'fields' => array( 'id' ), 'order' => 'Outbox.id DESC' ) );
+            $value = isset( $data[ 'Outbox' ][ 'id'] ) ? $data[ 'Outbox' ][ 'id'] : 1;
+            $no_surat = sprintf( "%03s", $value  ) . '/STIKOM-A/' . number2roman( date( 'm' ) ) . '/' . date( 'Y' );
+
             $len   = strlen( $value );
             $max   = (int) substr($value, 3, $len);
             $max++;
             $newid = 'OX-' . sprintf("%04s", $max);
             
-            $leaders = $this->Leader->find( 'list', array( 'conditions' => array( 'NOT' => array( 'type' => 1, 'id' => 1 ) ) ) );
+            $leaders = $this->Leader->find( 'list', array( 'conditions' => array( 'Leader.type' => 2 ) ) );
             $this->request->data[ 'Outbox' ][ 'no_arsip' ] = $newid;
-            $this->set( compact( 'leaders', 'newid' ) );            
+            $this->request->data[ 'Outbox' ][ 'no_surat' ] = $no_surat;
+            $this->set( compact( 'leaders' ) );            
         }
 
         public function admin_edit( $id = null ) 

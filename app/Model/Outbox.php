@@ -27,6 +27,11 @@ class Outbox extends AppModel
     public function getMailTypes()
     {
         return array( 1 => 'Segera', 2 => 'Penting', 3 => 'Biasa', 4 => 'Rahasia', 5 => 'Pribadi' );
+    }   
+
+    public function getPurposes()
+    {
+        return array( 'Keluar Instansi', 'Kedalam Instansi' );
     }	
 }
 //538710684340

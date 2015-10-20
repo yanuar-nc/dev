@@ -9,7 +9,7 @@
         <title><?= $title_for_layout; ?></title>
 
 		<?php
-		$theme_styles   = array( 'style.default','bootstrap-wysihtml5', 'flags/flags', 'prettyPhoto' );
+		$theme_styles   = array( 'style.default','bootstrap-wysihtml5', 'flags/flags', 'prettyPhoto', 'custom' );
 
 		echo $this->Html->css( $theme_styles, array( 'media' => 'screen' ), array( 'block' => 'css' ) );
         echo $this->fetch( 'css' );
