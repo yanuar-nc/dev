@@ -42,13 +42,13 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo __( 'No. Surat' ); ?></label>
                 <div class="col-sm-10">
-                    <?php echo $this->Form->input( 'no_surat', array( 'type' => 'text', 'required', 'class' => 'form-control', 'placeholder' => __( 'No. Surat' )  ) ); ?>
+                    <?php echo $this->Form->input( 'no_surat', array( 'type' => 'text', 'required', 'class' => 'form-control', 'placeholder' => __( 'No. Surat' ), 'readonly'  ) ); ?>
                 </div>
             </div>          
             <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo __( 'No. Arsip' ); ?></label>
                 <div class="col-sm-10">
-                    <?php echo $this->Form->input( 'no_arsip', array( 'type' => 'text', 'required', 'class' => 'form-control', 'placeholder' => __( 'No. Arsip' )  ) ); ?>
+                    <?php echo $this->Form->input( 'no_arsip', array( 'type' => 'text', 'required', 'class' => 'form-control', 'placeholder' => __( 'No. Arsip' ), 'readonly'  ) ); ?>
                 </div>
             </div>  
 

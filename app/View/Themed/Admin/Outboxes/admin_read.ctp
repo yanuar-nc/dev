@@ -8,11 +8,11 @@ $picture        = $picture_dir . '' . $datas[ 'file' ];
 ?>
 <div class="row mb10">
     <div class="col-md-3">
-        <a href="<?= $picture ?>" data-rel="prettyPhoto" class="btn btn-primary btn-block"><i class="fa fa-envelope-o"></i> &nbsp; Lihat Surat</a>
+        <a href="<?= $picture ?>" data-rel="" class="btn btn-primary btn-block"><i class="fa fa-envelope-o"></i> &nbsp; Lihat Surat</a>
     </div>
     <div class="col-md-3 col-md-offset-6">
         <?php
-            echo $this->Html->link(
+            /*echo $this->Html->link(
                     __( TEXT_EDIT ),
                     array(
                         'controller' => $var_controller,
@@ -20,7 +20,7 @@ $picture        = $picture_dir . '' . $datas[ 'file' ];
                         $datas[ 'id' ]
                     ),
                     array( 'class' => 'btn btn-white pull-right')
-                );  
+                );  */
         ?>
     </div>
 </div>
@@ -39,8 +39,8 @@ $picture        = $picture_dir . '' . $datas[ 'file' ];
                 
             </div><!-- col-sm-6 -->
             <div class="col-sm-6 text-right">
-                <h5 class="subtitle mb10">No. Arsip</h5>
-                <h4 class="text-primary"><?= $datas[ 'no_arsip' ] ?></h4>
+                <h5 class="subtitle mb10">No. Surat</h5>
+                <h4 class="text-primary"><?= $datas[ 'no_surat' ] ?></h4>
 <!--                 
                 <h5 class="subtitle mb10">Kepada</h5>
                 <address>
@@ -67,6 +67,15 @@ $picture        = $picture_dir . '' . $datas[ 'file' ];
             	<p>Pesan: </p>
             	<i><?= $datas[ 'pesan' ] == null ? 'Tidak ada pesan' : $datas[ 'pesan' ] ?></i>
             </div>
+            <?php
+            if( $datas[ 'purpose' ] == 1 ){
+            ?>
+                <div class="col-sm-12">
+                    <p>Status ketua: ( <?= text_approved( $datas[ 'leader_status' ] ) ?> )</p>
+                </div>            
+            <?php
+            }
+            ?>
         </div>        
     </div>
 </div>

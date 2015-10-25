@@ -15,27 +15,6 @@
             </div><!--/ .btn-group -->
 
             <div class="btn-group">
-
-                <?php 
-                    echo $this->Html->link(
-                        '<i class="fa fa-plus"></i> &nbsp; ' . __( BTN_ADD_NEW ),
-                        array(
-                            'controller' => $var_controller,
-                            'action' => ACTION_ADD,
-                        ),
-                        array(
-                            'class' => 'btn btn-sm btn-white tooltips',
-                            'data-toggle' => 'tooltip',
-                            'data-original-title' => __( TOOLTIP_ADD_NEW ),
-                            'tabindex' => 1,
-                            'escape' => false
-                        )
-                    ); 
-                ?>
-
-            </div>
-            
-            <div class="btn-group">
             
                 <?php 
                     echo $this->Html->link(
@@ -60,7 +39,7 @@
                 
                 <ul class="dropdown-menu" role="menu">
                     <li><?php echo $this->Paginator->sort( $var_model . '.perihal', __( 'Perihal' ) ); ?></li>
-                    <li><?php echo $this->Paginator->sort( $var_model . '.id', __( 'Tanggal' ) ); ?></li>
+                    <li><?php echo $this->Paginator->sort( $var_model . '.created', __( 'Tanggal' ) ); ?></li>
                 </ul>
                 
             </div><!--/ .btn-group -->
@@ -115,8 +94,16 @@
                                     ?>                                    
                                 </small>
                             </h4>
-                            <p>Lampiran: <br><small><?= $row[ 'lampiran' ] ?></small></p>
-                            <p> Tipe Surat : <small><?= $mail_types[ $row [ 'mail_type' ] ]; ?></small> </p>
+                            <p>Lampiran: <small><?= $row[ 'lampiran' ] ?></small>; &nbsp; Tujuan: <small><?= $getPurposes[ $row[ 'purpose' ] ]; ?></small>; &nbsp; Tipe Surat : <small><?= $mail_types[ $row [ 'mail_type' ] ]; ?></small> </p>
+                            <p>
+                                <?php
+                                foreach( $data[ 'Leader' ] as $data ):
+                                    $leader = $data[ 'OutboxLeader' ];
+                                    $status = $leader[ 'status' ];
+                                    echo $data[ 'name' ] . " ( " . text_approved( $status ) . " ), &nbsp ";
+                                endforeach;
+                                ?>                                
+                            </p>
                             <o><?php echo $created; ?></o>
                         </td>
                     </tr>

@@ -48,7 +48,16 @@
                 if( $this->MailInbox->save( $this->request->data ) )
                 {
                     $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
-                    $this->Notification->addNotif( $this->MailInbox->getInsertID(), 'mail_inboxes', 'add', 'edit', 2, 'leader' );
+                    $datas = array( array( 
+                        'sender_id'   => $this->auth_leader_id, 
+                        'receiver_id' => 2,  // ID KETUA STIKOM
+                        'content_id'  => $this->MailInbox->getInsertID(), 
+                        'content'     => 'mail_inboxes',
+                        'action'      => 'add',
+                        'redirect'    => 'edit',
+                        'mail_status' => 2 
+                    ) );           
+                    $this->Notification->addNotif( $datas );         
                     return $this->redirect( array( 'action' => ACTION_INDEX ) );
                 }
                 else
@@ -57,16 +66,23 @@
                 }
             }
             $created = date( 'Y-m-d h:i:s' );
-            $data  = $this->MailInbox->find( 'first', array( 'fields' => array( 'no_arsip' ), 'order' => 'MailInbox.id DESC' ) );
+/*            $data  = $this->MailInbox->find( 'first', array( 'fields' => array( 'no_arsip' ), 'order' => 'MailInbox.id DESC' ) );
             $value = isset( $data[ 'MailInbox' ][ 'no_arsip'] ) ? $data[ 'MailInbox' ][ 'no_arsip'] : 0;
             $len   = strlen( $value );
             $max   = (int) substr($value, 3, $len);
             $max++;
             $newid = 'AS-' . sprintf("%04s", $max);
+*/            
+            $data  = $this->MailInbox->find( 'first', array( 'fields' => array( 'id' ), 'order' => 'MailInbox.id DESC' ) );
+            $value = isset( $data[ 'MailInbox' ][ 'id'] ) ? $data[ 'MailInbox' ][ 'id'] + 1 : 1;
+            $no_surat = sprintf( "%03s", $value  ) . '/STIKOM-M/' . number2roman( date( 'm' ) ) . '/' . date( 'Y' );
+
+            $newid = 'AS-' . sprintf("%04s", $value);
             
             $leaders = $this->MailInbox->Leader->find( 'list', array( 'conditions' => array( 'type' => 1 ) ) );
+            $this->request->data[ 'MailInbox' ][ 'no_surat' ] = $no_surat;
             $this->request->data[ 'MailInbox' ][ 'no_arsip' ] = $newid;
-            $this->set( compact( 'leaders', 'newid' ) );
+            $this->set( compact( 'leaders' ) );
         }
 
         public function admin_index()
@@ -131,7 +147,7 @@
                 throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
             }
 
-            if( !$this->Notification->updateAll( array( 'status' => 1 ), array( 'Notification.content_id' => $id, 'Notification.content' => 'mail_inboxes', 'Notification.role' => 'admin' ) ) )
+            if( !$this->Notification->updateAll( array( 'status' => 1 ), array( 'Notification.content_id' => $id, 'Notification.content' => 'mail_inboxes', 'Notification.receiver_id' => $this->auth_leader_id ) ) ) 
                  $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ), 'Bootstrap/flash-error' );
 
             $options[ 'conditions' ] = array(
@@ -150,54 +166,6 @@
             $this->set( 'data', $data );
             //return $this->redirect( array( 'action' => ACTION_INDEX ) );
             
-        }
-        
-        public function admin_unread( $id = null )
-        {
-            
-            if( !$id )
-            {
-                throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
-            }
-            
-            $this->MailInbox->id = $id;
-            if( !$this->MailInbox->exists() )
-            {
-                throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
-            }
-
-            if( $this->MailInbox->updateAll( array( 'status' => 1 ), array( 'id' => $id ) ) )
-                 $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
-            else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
-
-            return $this->redirect( array( 'action' => ACTION_INDEX ) );
-            
-        }  
-
-        public function admin_delete( $id = null )
-        {
-            
-            if( !$id )
-            {
-                throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
-            }
-            
-            $this->request->onlyAllow( 'post' );
-            
-            $this->MailInbox->id = $id;
-            if( !$this->MailInbox->exists() )
-            {
-                throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
-            }
-            
-            if( $this->MailInbox->delete() )
-            {
-                $this->Session->setFlash( __( MSG_DATA_DELETE_SUCCESS ), 'Bootstrap/flash-success' );
-                return $this->redirect( array( 'action' => ACTION_INDEX ) );
-            }
-            
-            $this->Session->setFlash( __( MSG_DATA_DELETE_FAILED ), 'Bootstrap/flash-error' );
-            return $this->redirect( array( 'action' => ACTION_INDEX ) );
         }
         
         public function index()
@@ -239,7 +207,16 @@
                  $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
             else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
 
-            $this->Notification->addNotif( $id, 'mail_inboxes', 'approved', 'read', 1 );
+            $admin = array( array( 
+                        'sender_id'   => $this->auth_leader_id, 
+                        'receiver_id' => 1,  // ID ADMIN
+                        'content_id'  => $id, 
+                        'content'     => 'mail_inboxes',
+                        'action'      => 'approved',
+                        'redirect'    => 'read',
+                        'mail_status' => 1 
+                    ) );
+            $this->Notification->addNotif( $admin );
 
             //$this->set( 'data', $this->MailInbox->read( null, $id ) );
             return $this->redirect( array( 'action' => ACTION_INDEX ) );
@@ -263,28 +240,20 @@
                  $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
             else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
 
-            $this->Notification->addNotif( $id, 'mail_inboxes', 'not_approved', 'read', 0 );
+            $admin = array( array( 
+                        'sender_id'   => $this->auth_leader_id, 
+                        'receiver_id' => 1,  // ID ADMIN
+                        'content_id'  => $id, 
+                        'content'     => 'mail_inboxes',
+                        'action'      => 'not_approved',
+                        'redirect'    => 'read',
+                        'mail_status' => 0 
+                    ) );
+            $this->Notification->addNotif( $admin );
+
             //$this->set( 'data', $this->MailInbox->read( null, $id ) );
             return $this->redirect( array( 'action' => ACTION_INDEX ) );
 
-        }
-        
-        public function add()
-        {
-            if( $this->request->is( 'post' ) )
-            {
-                $this->MailInbox->create();
-                $this->request->data[ 'MailInbox' ][ 'status' ] = 1;
-                if( $this->MailInbox->save( $this->request->data ) )
-                {
-                    $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
-                    return $this->redirect( array( 'action' => ACTION_INDEX ) );
-                }
-                else
-                {
-                    $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
-                }
-            }
         }
 
         public function leader_index()
@@ -312,7 +281,7 @@
                 throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
             }
 
-            if( !$this->Notification->updateAll( array( 'status' => 1 ), array( 'Notification.content_id' => $id, 'Notification.content' => 'mail_inboxes', 'Notification.role LIKE' => '%'. $this->auth_role .'%' ) ) )
+            if( !$this->Notification->updateAll( array( 'status' => 1 ), array( 'Notification.content_id' => $id, 'Notification.content' => 'mail_inboxes', 'Notification.receiver_id' => $this->auth_leader_id ) ) )
                  $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ), 'Bootstrap/flash-error' );
             
             if( $this->request->is( 'post' ) || $this->request->is( 'put' ) )
@@ -344,17 +313,44 @@
                 }
 
                 $this->LeaderMail->deleteAll( array( 'Leader.id' => $z ), false );  
-                //$this->set( 'x', $x );                
+                //$this->set( 'x', $x );    
+
+                $datas = $leaders = array();
+
+                $admin = array( array( 
+                            'sender_id'   => $this->auth_leader_id, 
+                            'receiver_id' => 1,  // ID ADMIN
+                            'content_id'  => $id, 
+                            'content'     => 'mail_inboxes',
+                            'action'      => 'approved',
+                            'redirect'    => 'read',
+                            'mail_status' => 1 
+                        ) );
+
                 if( $this->MailInbox->saveAssociated( $this->request->data, array( 'deep' => true ) ) )
                 {
+
+                    $this->MailInbox->updateAll( array( 'MailInbox.leader_status' => 1 ), array( 'MailInbox.id' => $id ) );
+
                     $this->Session->setFlash( __( MSG_DATA_EDIT_SUCCESS ), 'Bootstrap/flash-success' );
                     if( isset( $this->request->data[ $this->model_name ][ 'Assistant' ] ) )
                     {
                         foreach( $this->request->data[ $this->model_name ][ 'Assistant' ] as $key ):
-                            $this->Notification->addNotif( $this->request->data[ $this->model_name ][ 'id' ], 'mail_inboxes', 'add', 'read', 2, 'assistant' );
+                            $leaders[] = array( 
+                                    'sender_id'   => $this->auth_leader_id, 
+                                    'receiver_id' => $key,
+                                    'content_id'  => $this->request->data[ $this->model_name ][ 'id' ], 
+                                    'content'     => 'mail_inboxes',
+                                    'action'      => 'add',
+                                    'redirect'    => 'read',
+                                    'mail_status' => 2 
+                                );                            
                         endforeach;                        
                     }
-                    //return $this->redirect( array( 'action' => ACTION_INDEX ) );
+                    $datas = array_merge( $admin, $leaders );   
+                    $this->Notification->addNotif( $datas );
+
+                    return $this->redirect( array( 'action' => ACTION_INDEX ) );
                 }
             }
             else
@@ -381,7 +377,16 @@
             if( $this->MailInbox->updateAll( array( 'MailInbox.leader_status' => 1 ), array( 'MailInbox.id' => $id ) ) )
                  $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
             else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
-            $this->Notification->addNotif( $id, 'mail_inboxes', 'approved', 'read', 1 );
+            $admin = array( array( 
+                        'sender_id'   => $this->auth_leader_id, 
+                        'receiver_id' => 1,  // ID ADMIN
+                        'content_id'  => $id, 
+                        'content'     => 'mail_inboxes',
+                        'action'      => 'approved',
+                        'redirect'    => 'read',
+                        'mail_status' => 1 
+                    ) );
+            $this->Notification->addNotif( $admin );
             //$this->set( 'data', $this->MailInbox->read( null, $id ) );
             return $this->redirect( array( 'action' => ACTION_INDEX ) );
         }
@@ -402,19 +407,19 @@
                  $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
             else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
 
-            $this->Notification->addNotif( $id, 'mail_inboxes', 'not_approved', 'read', 1 );
+            $admin = array( array( 
+                        'sender_id'   => $this->auth_leader_id, 
+                        'receiver_id' => 1,  // ID ADMIN
+                        'content_id'  => $id, 
+                        'content'     => 'mail_inboxes',
+                        'action'      => 'not_approved',
+                        'redirect'    => 'read',
+                        'mail_status' => 0 
+                    ) );
+            $this->Notification->addNotif( $admin );
             //$this->set( 'data', $this->MailInbox->read( null, $id ) );
             return $this->redirect( array( 'action' => ACTION_INDEX ) );
 
-        }
-
-        public function leader_inbox_notif()
-        {
-            $this->autoRender = false;
-
-            $count = $this->MailInbox->find( 'count', array( 'conditions' => array( 'MailInbox.leader_id' => $this->auth_leader_id, 'MailInbox.leader_status' => 0 ) ) );
-            if ( $count > 0 )
-                return $count;
         }
 
         public function assistant_approved( $id = null )
@@ -446,7 +451,7 @@
                 throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
             }
 
-            if( !$this->Notification->updateAll( array( 'status' => 1 ), array( 'Notification.content_id' => $id, 'Notification.content' => 'mail_inboxes', 'Notification.role LIKE' =>  '%'. $this->auth_role .'%' ) ) )
+            if( !$this->Notification->updateAll( array( 'status' => 1 ), array( 'Notification.content_id' => $id, 'Notification.content' => 'mail_inboxes', 'Notification.receiver_id' =>  $this->auth_leader_id) ) )
                  $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ), 'Bootstrap/flash-error' );
             
             if( $this->request->is( 'post' ) || $this->request->is( 'put' ) )
@@ -490,16 +495,42 @@
                     $z[]= $id;
                 }
 
-                $this->LeaderMail->deleteAll( array( 'Leader.id' => $z ), false );                
+                $this->LeaderMail->deleteAll( array( 'Leader.id' => $z ), false );
+
                 if( $this->MailInbox->saveAssociated( $this->request->data, array( 'deep' => true )  ) )
                 {
-                    $this->Session->setFlash( __( MSG_DATA_EDIT_SUCCESS ), 'Bootstrap/flash-success' );
+                    $datas = $leaders = array();
+
                     if( isset( $this->request->data[ $this->model_name ][ 'Unit' ] ) )
                     {
                         foreach( $this->request->data[ $this->model_name ][ 'Unit' ] as $key ):
-                            $this->Notification->addNotif( $this->request->data[ $this->model_name ][ 'id' ], 'mail_inboxes', 'add', 'read', 2, 'unit' );
+                            //$this->Notification->addNotif( $this->request->data[ $this->model_name ][ 'id' ], 'mail_inboxes', 'add', 'read', 2, 'unit' );
+                            $leaders[] = array( 
+                                            'sender_id'   => $this->auth_leader_id, 
+                                            'receiver_id' => $key,
+                                            'content_id'  => $id, 
+                                            'content'     => 'mail_inboxes',
+                                            'action'      => 'add',
+                                            'redirect'    => 'read',
+                                            'mail_status' => 2 
+                                        );
                         endforeach;                        
                     }                    
+                    $admin = array( array( 
+                        'sender_id'   => $this->auth_leader_id, 
+                        'receiver_id' => 1,  // ID ADMIN
+                        'content_id'  => $id, 
+                        'content'     => 'mail_inboxes',
+                        'action'      => 'approved',
+                        'redirect'    => 'read',
+                        'mail_status' => 1 
+                    ) );
+                    $datas = array_merge( $admin, $leaders );   
+
+                    $this->MailInbox->LeaderMail->updateAll( array( 'LeaderMail.status' => 1 ), array( 'mail_inbox_id' => $id, 'LeaderMail.leader_id' => $this->auth_leader_id ) );
+                    $this->Notification->addNotif( $datas );                     
+
+                    $this->Session->setFlash( __( MSG_DATA_EDIT_SUCCESS ), 'Bootstrap/flash-success' );
                     return $this->redirect( array( 'action' => ACTION_INDEX ) );
                 }
             }
@@ -550,7 +581,7 @@
                 throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
             }
 
-            if( !$this->Notification->updateAll( array( 'status' => 1 ), array( 'Notification.content_id' => $id, 'Notification.content' => 'mail_inboxes', 'Notification.role LIKE' => '%'. $this->auth_role .'%' ) ) )
+            if( !$this->Notification->updateAll( array( 'status' => 1 ), array( 'Notification.content_id' => $id, 'Notification.content' => 'mail_inboxes', 'Notification.receiver_id' => $this->auth_leader_id ) ) )
                  $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ), 'Bootstrap/flash-error' );
         
             $this->request->data = $this->MailInbox->read( null, $id );

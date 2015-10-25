@@ -61,8 +61,9 @@
                 </button>
                 
                 <ul class="dropdown-menu" role="menu">
-                    <li><?php echo $this->Paginator->sort( $var_model . '.id', 'Id' ); ?></li>
                     <li><?php echo $this->Paginator->sort( $var_model . '.perihal', __( 'Perihal' ) ); ?></li>
+                    <li><?php echo $this->Paginator->sort( $var_model . '.created', 'Tanggal' ); ?></li>
+                    <li><?php echo $this->Paginator->sort( $var_model . '.purpose', __( 'Tujuan Surat' ) ); ?></li>
                 </ul>
                 
             </div><!--/ .btn-group -->
@@ -99,7 +100,7 @@
                                 ?> / 
                                 <small><?= $mail_types[ $row[ 'mail_type' ] ] ?></small>
                             </h4>
-                            <p>Lampiran: <small><?= $row[ 'lampiran' ] ?></small></p>
+                            <p>Tujuan: <small><?= $getPurposes[ $row[ 'purpose' ] ] ?></small>; &nbsp; Lampiran: <small><?= $row[ 'lampiran' ] ?></small></p>
                             <p>Untuk: <small>
                                 <?php
                                 foreach( $data[ 'Leader' ] as $leader ):

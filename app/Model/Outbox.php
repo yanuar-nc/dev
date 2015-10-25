@@ -31,7 +31,7 @@ class Outbox extends AppModel
 
     public function getPurposes()
     {
-        return array( 'Keluar Instansi', 'Kedalam Instansi' );
+        return array( 'Kedalam Instansi', 'Keluar Instansi' );
     }	
 }
 //538710684340
