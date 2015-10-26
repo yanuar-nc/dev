@@ -34,6 +34,15 @@
 			)
 		);
 
+        public $validate = array(
+            'file' => array(
+                'pictureRule-1' => array (
+                    'rule' => array('isValidMimeType', array( 'image/jpg', 'image/jpeg', 'image/png' ) ),
+                    'message' => 'File is not a jpg/jpeg or png'
+                ),
+            )
+        );        
+
         public function beforeSave($options = array()){
             foreach (array_keys($this->hasAndBelongsToMany) as $model){
 

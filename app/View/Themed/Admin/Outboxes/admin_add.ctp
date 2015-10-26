@@ -12,8 +12,17 @@
         
     </div><!--/ .panel-heading -->
     
-    <?php echo $this->Form->create( $var_model, array( 'type' => 'file', 'autocomplete' => 'off', 'class' => 'form-horizontal', 'inputDefaults' => array( 'div' => false, 'label' => false ) ) ); ?>  
-    
+    <?php echo $this->Form->create( $var_model, array( 'type' => 'file', 'autocomplete' => 'off', 'class' => 'form-horizontal', 'inputDefaults' => array( 'div' => false, 
+               'label' => false, 
+               'error' => array(
+                    'attributes' => array(
+                        'class' => 'alert alert-dismissable alert-warning mt12'
+                    )
+                ) 
+            ) 
+        ) ); 
+    ?>  
+
     <div class="panel-body">
         
         <div class="btn-toolbar">
@@ -77,7 +86,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo __( 'Kepada' ); ?></label>
                 <div class="col-sm-10">
-                    <?php echo $this->Form->input( 'Outbox.Leader', array( 'options' => $leaders, 'multiple' => 'checkbox', 'class' => 'checkbox block' ) ); ?>
+                    <?php echo $this->Form->input( 'Outbox.Leader', array( 'options' => $leaders, 'multiple' => 'checkbox', 'class' => 'checkbox block', 'required' ) ); ?>
                 </div>
             </div>               
             <div class="form-group">

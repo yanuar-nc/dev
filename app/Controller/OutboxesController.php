@@ -74,7 +74,7 @@
                 }
                 else
                 {
-                    $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
+                    $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ), 'Bootstrap/flash-error' );
                 }
             }
             $created = date( 'Y-m-d h:i:s' );
@@ -268,7 +268,7 @@
             }
             if( $this->Outbox->OutboxLeader->updateAll( array( 'OutboxLeader.status' => 1 ), array( 'outbox_id' => $id, 'OutboxLeader.leader_id' => $this->auth_leader_id ) ) )
                  $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
-            else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
+            else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ), 'Bootstrap/flash-error' );
 
             $data = $this->Outbox->read( null, $id );
             $datas = $leaders = array();
@@ -334,7 +334,7 @@
             }
             if( $this->Outbox->OutboxLeader->updateAll( array( 'OutboxLeader.status' => 0 ), array( 'outbox_id' => $id, 'OutboxLeader.leader_id' => $this->auth_leader_id ) ) )
                  $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
-            else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
+            else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ), 'Bootstrap/flash-error' );
 
             $data = $this->Outbox->findById( $id );
             $datas = $leaders = array();
@@ -405,7 +405,7 @@
             }
             if( $this->Outbox->OutboxLeader->updateAll( array( 'OutboxLeader.status' => 1 ), array( 'outbox_id' => $id, 'OutboxLeader.leader_id' => $this->auth_leader_id ) ) )
                  $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
-            else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
+            else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ), 'Bootstrap/flash-error' );
             
             $datas = array( 'sender_id'   => $this->auth_leader_id, 
                             'receiver_id' => 1, 
@@ -453,7 +453,7 @@
             }
             if( $this->Outbox->updateAll( array( 'Outbox.leader_status' => 1 ), array( 'id' => $id ) ) )
                  $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
-            else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
+            else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ), 'Bootstrap/flash-error' );
 
             $data = $this->Outbox->read( null, $id );
 
@@ -485,7 +485,7 @@
             }
             if( $this->Outbox->updateAll( array( 'Outbox.leader_status' => 0 ), array( 'Outbox.id' => $id ) ) )
                  $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
-            else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
+            else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ), 'Bootstrap/flash-error' );
 
             $this->Notification->addNotif( $id, 'outboxes', 'not_approved', 'read', 0 );
             //$this->set( 'data', $this->Outbox->read( null, $id ) );

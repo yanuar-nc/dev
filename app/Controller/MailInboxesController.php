@@ -62,7 +62,7 @@
                 }
                 else
                 {
-                    $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
+                    $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ), 'Bootstrap/flash-error' );
                 }
             }
             $created = date( 'Y-m-d h:i:s' );
@@ -205,7 +205,7 @@
             }
             if( $this->MailInbox->LeaderMail->updateAll( array( 'LeaderMail.status' => 1 ), array( 'mail_inbox_id' => $id, 'LeaderMail.leader_id' => $this->auth_leader_id ) ) )
                  $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
-            else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
+            else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ), 'Bootstrap/flash-error' );
 
             $admin = array( array( 
                         'sender_id'   => $this->auth_leader_id, 
@@ -238,7 +238,7 @@
             }
             if( $this->MailInbox->LeaderMail->updateAll( array( 'LeaderMail.status' => 0 ), array( 'mail_inbox_id' => $id, 'LeaderMail.leader_id' => $this->auth_leader_id ) ) )
                  $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
-            else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
+            else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ), 'Bootstrap/flash-error' );
 
             $admin = array( array( 
                         'sender_id'   => $this->auth_leader_id, 
@@ -333,7 +333,7 @@
                     $this->MailInbox->updateAll( array( 'MailInbox.leader_status' => 1 ), array( 'MailInbox.id' => $id ) );
 
                     $this->Session->setFlash( __( MSG_DATA_EDIT_SUCCESS ), 'Bootstrap/flash-success' );
-                    if( isset( $this->request->data[ $this->model_name ][ 'Assistant' ] ) )
+                    if( count( $this->request->data[ $this->model_name ][ 'Assistant' ] ) >0 )
                     {
                         foreach( $this->request->data[ $this->model_name ][ 'Assistant' ] as $key ):
                             $leaders[] = array( 
@@ -351,6 +351,8 @@
                     $this->Notification->addNotif( $datas );
 
                     return $this->redirect( array( 'action' => ACTION_INDEX ) );
+                } else {
+                    $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ), 'Bootstrap/flash-error' );
                 }
             }
             else
@@ -376,7 +378,7 @@
             }
             if( $this->MailInbox->updateAll( array( 'MailInbox.leader_status' => 1 ), array( 'MailInbox.id' => $id ) ) )
                  $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
-            else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
+            else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ), 'Bootstrap/flash-error' );
             $admin = array( array( 
                         'sender_id'   => $this->auth_leader_id, 
                         'receiver_id' => 1,  // ID ADMIN
@@ -405,7 +407,7 @@
             }
             if( $this->MailInbox->updateAll( array( 'MailInbox.leader_status' => 0 ), array( 'MailInbox.id' => $id ) ) )
                  $this->Session->setFlash( __( MSG_DATA_UPDATE_SUCCESS ), 'Bootstrap/flash-success' );
-            else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ) );
+            else $this->Session->setFLash( __( MSG_DATA_SAVE_FAILED ), 'Bootstrap/flash-error' );
 
             $admin = array( array( 
                         'sender_id'   => $this->auth_leader_id, 

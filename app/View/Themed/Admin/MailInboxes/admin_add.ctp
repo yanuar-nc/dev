@@ -12,7 +12,16 @@
         
     </div><!--/ .panel-heading -->
     
-    <?php echo $this->Form->create( $var_model, array( 'type' => 'file', 'autocomplete' => 'off', 'class' => 'form-horizontal', 'inputDefaults' => array( 'div' => false, 'label' => false ) ) ); ?>  
+    <?php echo $this->Form->create( $var_model, array( 'type' => 'file', 'autocomplete' => 'off', 'class' => 'form-horizontal', 'inputDefaults' => array( 'div' => false, 
+               'label' => false, 
+               'error' => array(
+                    'attributes' => array(
+                        'class' => 'alert alert-dismissable alert-warning mt12'
+                    )
+                ) 
+            ) 
+        ) ); 
+    ?>  
     
     <div class="panel-body">
         

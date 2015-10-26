@@ -24,6 +24,25 @@ class Outbox extends AppModel
         )
     );
 
+    public $validate = array(
+        'file' => array(
+            'fileRule-1' => array (
+                'rule' => array('isValidMimeType', 
+                    array( 
+                        'application/pdf', 
+                        'application/msword',
+                        'application/vnd.openxmlformats-officedocument.wordprocessingml.document' 
+                    ) 
+                ),
+                'message' => 'Format file harus PDF atau Microsoft Word (*.doc, *.docx, *.pdf)'
+            ),
+        ),
+        'Leader' => array(
+            'rule' => array( 'multiple', array( 'min' => 1 ) ),
+            'message' => 'Anda harus mengisi salah satu opsi diatas'
+        )
+    );        
+
     public function getMailTypes()
     {
         return array( 1 => 'Segera', 2 => 'Penting', 3 => 'Biasa', 4 => 'Rahasia', 5 => 'Pribadi' );
