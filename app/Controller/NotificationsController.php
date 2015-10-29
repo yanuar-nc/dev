@@ -29,19 +29,20 @@
         {
 
             $this->autoRender = false;
-            $options[ 'conditions' ] = array( 'Notification.status' => 0, 'Notification.role' => 'admin' );
+            $options[ 'conditions' ] = array( 'Notification.status' => 0, 'Notification.receiver_id' => $this->auth_leader_id );
             if ( $id > 0 )
             {
-                $options[ 'conditions' ] = array( 'Notification.status' => 0, 'Notification.role' => 'admin', 'Notification.id > ' . $id );
+                $options[ 'conditions' ] = array_merge( $options[ 'conditions' ], array( 'Notification.id > ' . $id ) );
             }
 
             $datas = $this->Notification->find( 'all', $options );
             $text_notification = $this->Notification->getTextNotification();
+            $this->response->type('json');
             if ( count( $datas ) > 0 ):
                 foreach ( $datas as $key => $data ) {
 
                     $row    = $data[ 'Notification' ];
-                    $leader = $data[ 'Leader' ];
+                    $leader = $data[ 'Sender' ];
 
                     $from   = $leader[ 'name' ];
                     $time   = time_ago( $row[ 'created' ] );
@@ -51,7 +52,6 @@
                     $merge  = array( 'from' => $from, 'text' => $text, 'redirect' => $redirect, 'time' => $time );
                     $datas[ $key ][ 'Notification' ] = array_merge( $row, $merge );
                 }
-                $this->response->type('json');
                 $json  = json_encode( $datas );
                 $this->response->body($json);
             else:
@@ -74,19 +74,19 @@
         {
 
             $this->autoRender = false;
-            $options[ 'conditions' ] = array( 'Notification.status' => 0, 'Notification.role' => 'leader' );
+            $options[ 'conditions' ] = array( 'Notification.status' => 0, 'Notification.receiver_id' => $this->auth_leader_id );
             if ( $id > 0 )
             {
-                $options[ 'conditions' ] = array( 'Notification.status' => 0, 'Notification.role' => 'leader', 'Notification.id > ' . $id );
+                $options[ 'conditions' ] = array_merge( $options[ 'conditions' ], array( 'Notification.id > ' . $id ) );
             }
-
+            
             $datas = $this->Notification->find( 'all', $options );
             $text_notification = $this->Notification->getTextNotification();
             if ( count( $datas ) > 0 ):
                 foreach ( $datas as $key => $data ) {
 
                     $row    = $data[ 'Notification' ];
-                    $leader = $data[ 'Leader' ];
+                    $leader = $data[ 'Sender' ];
 
                     $from   = $leader[ 'name' ];
                     $time   = time_ago( $row[ 'created' ] );
@@ -108,10 +108,10 @@
         {
 
             $this->autoRender = false;
-            $options[ 'conditions' ] = array( 'Notification.status' => 0, 'Notification.role LIKE' => '%assistant%' );
+            $options[ 'conditions' ] = array( 'Notification.status' => 0, 'Notification.receiver_id' => $this->auth_leader_id );
             if ( $id > 0 )
             {
-                $options[ 'conditions' ] = array( 'Notification.status' => 0, 'Notification.role LIKE' => '%assistant%', 'Notification.id > ' . $id );
+                $options[ 'conditions' ] = array_merge( $options[ 'conditions' ], array( 'Notification.id > ' . $id ) );
             }
 
             $datas = $this->Notification->find( 'all', $options );
@@ -120,7 +120,7 @@
                 foreach ( $datas as $key => $data ) {
 
                     $row    = $data[ 'Notification' ];
-                    $leader = $data[ 'Leader' ];
+                    $leader = $data[ 'Sender' ];
 
                     $from   = $leader[ 'name' ];
                     $time   = time_ago( $row[ 'created' ] );
@@ -142,10 +142,10 @@
         {
 
             $this->autoRender = false;
-            $options[ 'conditions' ] = array( 'Notification.status' => 0, 'Notification.role LIKE' => '%unit%' );
+            $options[ 'conditions' ] = array( 'Notification.status' => 0, 'Notification.receiver_id' => $this->auth_leader_id );
             if ( $id > 0 )
             {
-                $options[ 'conditions' ] = array( 'Notification.status' => 0, 'Notification.role LIKE' => '%unit%', 'Notification.id > ' . $id );
+                $options[ 'conditions' ] = array_merge( $options[ 'conditions' ], array( 'Notification.id > ' . $id ) );
             }
 
             $datas = $this->Notification->find( 'all', $options );
@@ -154,7 +154,7 @@
                 foreach ( $datas as $key => $data ) {
 
                     $row    = $data[ 'Notification' ];
-                    $leader = $data[ 'Leader' ];
+                    $leader = $data[ 'Sender' ];
 
                     $from   = $leader[ 'name' ];
                     $time   = time_ago( $row[ 'created' ] );

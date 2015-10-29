@@ -1,4 +1,6 @@
 
+    
+    <div class="panel-body">
         
         <div class="btn-toolbar">
         
@@ -13,7 +15,7 @@
                 </a>
                 
             </div><!--/ .btn-group -->
-
+            
             <div class="btn-group">
             
                 <?php 
@@ -39,7 +41,7 @@
                 
                 <ul class="dropdown-menu" role="menu">
                     <li><?php echo $this->Paginator->sort( $var_model . '.perihal', __( 'Perihal' ) ); ?></li>
-                    <li><?php echo $this->Paginator->sort( $var_model . '.created', __( 'Tanggal' ) ); ?></li>
+                    <li><?php echo $this->Paginator->sort( $var_model . '.created', 'Tanggal' ); ?></li>
                 </ul>
                 
             </div><!--/ .btn-group -->
@@ -48,12 +50,7 @@
         
         <br />
         
-        
             <table class="table table-bordered table-hover">
-
-                <thead>
-
-                </thead>
 
                 <tbody>
 
@@ -63,48 +60,30 @@
                             $row    = $data[ $var_model ];
                             $id     = $row[ 'id' ];
 
-                            $created   = date( 'D, d F Y H:i:s', strtotime( $row[ 'created' ] ) );
-                            foreach( $data[ 'OutboxLeader' ] as $outbox )
-                            {   
-                                if( $outbox[ 'leader_id' ] == $auth_data[ 'leader_id' ] )
-                                {
-                                    $status = $outbox[ 'status' ];
-                                    
-                                }
-                            }
-                    ?>
+                            $created   = date( 'D, d F Y', strtotime( $row[ 'created' ] ) );
+                            $status    = $row[ 'leader_status' ];
+                    ?> 
 
                     <tr class="<?= bootstrap_row_status_type2( $status ) ?>">
                         <td>
                             <h4>
                                 <?php
                                     echo $this->Html->link(
-                                        __( $row[ 'perihal' ] ),
+                                        $row[ 'perihal' ],
                                         array(
                                             'controller' => $var_controller,
                                             'action' => 'read',
                                             $id
                                         )
                                     );
-                                ?>
-                                / 
-                                <small>
-                                    <?php
-                                        echo text_approved( $status ) ;
-                                    ?>                                    
-                                </small>
+                                ?> / 
+                                <small><?= $mail_types[ $row[ 'mail_type' ] ] ?></small>
                             </h4>
-                            <p>Lampiran: <small><?= $row[ 'lampiran' ] ?></small>; &nbsp; Tujuan: <small><?= $getPurposes[ $row[ 'purpose' ] ]; ?></small>; &nbsp; Tipe Surat : <small><?= $mail_types[ $row [ 'mail_type' ] ]; ?></small> </p>
-                            <p>
-                                <?php
-                                foreach( $data[ 'Leader' ] as $data ):
-                                    $leader = $data[ 'OutboxLeader' ];
-                                    $status = $leader[ 'status' ];
-                                    echo $data[ 'name' ] . " ( " . text_approved( $status ) . " ), &nbsp ";
-                                endforeach;
-                                ?>                                
-                            </p>
-                            <o><?php echo $created; ?></o>
+                            <p>Lampiran: <small><?= $row[ 'lampiran' ] ?></small></p>
+                            <p>Status: <small>(<?= text_approved( $status ) ?>)</small></p>
+                            <small>
+                                <i class="fa fa-calendar"> &nbsp; <?= $created ?></i>
+                            </small>
                         </td>
                     </tr>
 
@@ -115,3 +94,5 @@
         
         <?php echo $this->Element( 'Administrator/pagination' ); ?>
         
+    </div><!--/ .panel-body -->
+    

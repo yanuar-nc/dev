@@ -12,15 +12,26 @@ $picture        = $picture_dir . '' . $datas[ 'file' ];
     </div>
     <div class="col-md-3 col-md-offset-6">
         <?php
-            /*echo $this->Html->link(
-                    __( TEXT_EDIT ),
-                    array(
-                        'controller' => $var_controller,
-                        'action' => 'edit',
-                        $datas[ 'id' ]
-                    ),
-                    array( 'class' => 'btn btn-white pull-right')
-                );  */
+            if( $datas[ 'leader_status' ] == 0 )
+                echo $this->Html->link(
+                        __( TEXT_APPROVED ),
+                        array(
+                            'controller' => $var_controller,
+                            'action' => 'approved',
+                            $datas[ 'id' ]
+                        ),
+                        array( 'class' => 'btn btn-white pull-right')
+                    );   
+            else
+                echo $this->Html->link(
+                        __( TEXT_NOT_APPROVED ),
+                        array(
+                            'controller' => $var_controller,
+                            'action' => 'not_approved',
+                            $datas[ 'id' ]
+                        ),
+                        array( 'class' => 'btn btn-white pull-right')
+                    );   
         ?>
     </div>
 </div>
@@ -55,27 +66,12 @@ $picture        = $picture_dir . '' . $datas[ 'file' ];
         </div>
         <div class="row">
             <div class="col-sm-12 mb30">
-                <p>Status leader: </p>
-                <?php
-                foreach( $data[ 'Leader' ] as $assistant ):
-                    $status = text_approved( $assistant[ 'OutboxLeader' ][ 'status' ] );
-                    echo $assistant[ 'name' ] . " ( " . $status . " ), &nbsp ";
-                endforeach;
-                ?>                
+                <p>Pesan: </p>
+                <i><?= $datas[ 'pesan' ] == null ? 'Tidak ada pesan' : $datas[ 'pesan' ] ?></i>
             </div>
-            <div class="col-sm-12 mb30">
-            	<p>Pesan: </p>
-            	<i><?= $datas[ 'pesan' ] == null ? 'Tidak ada pesan' : $datas[ 'pesan' ] ?></i>
+            <div class="col-sm-12">
+                <p>Status ketua: ( <?= text_approved( $datas[ 'leader_status' ] ) ?> )</p>
             </div>
-            <?php
-            if( $datas[ 'purpose' ] == 1 ){
-            ?>
-                <div class="col-sm-12">
-                    <p>Status ketua: ( <?= text_approved( $datas[ 'leader_status' ] ) ?> )</p>
-                </div>            
-            <?php
-            }
-            ?>
         </div>        
     </div>
 </div>

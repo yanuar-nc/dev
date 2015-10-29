@@ -12,11 +12,12 @@
         <div class="header-right">
             
             <div class="pull-right">                
-                <div class="btn-group btn-group-list">
-                    <a href="<?= Router::url( array( 'controller' => 'mail_inboxes', 'action' => 'add' ) ) ?>" style="color: #FFF" class="btn btn-default">
-                        <i class="fa fa-plus"></i>
-                    </a>
-                </div>
+                <?php
+                echo $this->Form->create( 'Search', array( 'url' => '/' . $auth_role . '/search/index', 'type' => 'get', 'class' => 'form form-search', 'inputDefaults' => array( 'div' => false, 'label' => false ) ) );
+                echo $this->Form->input( 'keyword', array( 'class' => 'form-control', 'placeholder' => 'Search', 'type' => 'search' ) );
+
+                echo $this->Form->end();
+                ?>
                 
                 <div class="btn-group btn-group-list btn-group-notification">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -33,13 +34,6 @@
                         </div>
                     </div><!-- dropdown-menu -->
                 </div>
-                <!-- <div class="btn-group btn-group-list">
-                    <a href="<?= Router::url( array( 'controller' => 'outboxes', 'action' => 'index' ) ) ?>" style="color: #FFF" class="btn btn-default">
-                        <i class="fa fa-send"></i>
-                        <span class="badge" id="OutboxMessage" url="<?= Router::url( array( 'controller' => 'outbox_leaders', 'action' => 'checkOutboxMessage', $this->request->prefix => false ), true) ?>">0</span>
-                    </a>
-                </div> -->
-
 
                         
                 <!-- Menu Profile -->       

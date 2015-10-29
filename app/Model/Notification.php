@@ -8,10 +8,10 @@ App::uses('CakeSession', 'Model/Datasource');
             //'CompPhoto', 'CompVideo', 'HallOfSharp', 'CompStory', 'Notification', 'SharpUp'
         );
 
-        public $belongsTo = array( 'Leader' );
+        public $belongsTo = array( 'Sender' => array( 'className' => 'Leader', 'foreignKey' => 'sender_id' ), 'Receiver' => array( 'className' => 'Leader', 'foreignKey' => 'receiver_id' ) );
         public $actsAs = array( 'Containable' ) ;
-
-        public function addNotif( $content_id = null, $content = null, $action = null, $redirect = null, $mail_status = null, $role = "admin" )
+    
+        public function addNotif( $datas = array() )
         {
             /*
             if( !$id )
@@ -25,7 +25,7 @@ App::uses('CakeSession', 'Model/Datasource');
                 throw new NotFoundException( __( MSG_DATA_NOT_FOUND ) );
             }
             */
-
+/*
             $leader_id = CakeSession::read("Auth.User.leader_id");
             $data   = array( 'Notification' );
             $data[ 'leader_id' ]  = $leader_id;
@@ -37,8 +37,8 @@ App::uses('CakeSession', 'Model/Datasource');
             $data[ 'role' ]        = $role;
             $data[ 'status' ]     = 0;
             $data[ 'created' ]    = date( 'Y-m-d H:i:s' );
-
-            if( $this->save( $data ) )
+*/
+            if( $this->saveAll( $datas ) )
             {
                 
                 return true;
