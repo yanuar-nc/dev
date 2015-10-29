@@ -333,7 +333,7 @@
                     $this->MailInbox->updateAll( array( 'MailInbox.leader_status' => 1 ), array( 'MailInbox.id' => $id ) );
 
                     $this->Session->setFlash( __( MSG_DATA_EDIT_SUCCESS ), 'Bootstrap/flash-success' );
-                    if( count( $this->request->data[ $this->model_name ][ 'Assistant' ] ) >0 )
+                    if( !empty( $this->request->data[ $this->model_name ][ 'Assistant' ] ) )
                     {
                         foreach( $this->request->data[ $this->model_name ][ 'Assistant' ] as $key ):
                             $leaders[] = array( 
@@ -503,7 +503,7 @@
                 {
                     $datas = $leaders = array();
 
-                    if( isset( $this->request->data[ $this->model_name ][ 'Unit' ] ) )
+                    if( !empty( $this->request->data[ $this->model_name ][ 'Unit' ] ) )
                     {
                         foreach( $this->request->data[ $this->model_name ][ 'Unit' ] as $key ):
                             //$this->Notification->addNotif( $this->request->data[ $this->model_name ][ 'id' ], 'mail_inboxes', 'add', 'read', 2, 'unit' );
